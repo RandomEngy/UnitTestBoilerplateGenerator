@@ -85,7 +85,7 @@ namespace UnitTestBoilerplate.Services
 				Directory.CreateDirectory(testFolder);
 			}
 
-			File.WriteAllText(testPath, unitTestContents);
+			File.WriteAllText(testPath, unitTestContents, new UTF8Encoding(true));
 
 			return testPath;
 		}
