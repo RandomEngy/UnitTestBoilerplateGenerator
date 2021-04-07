@@ -94,7 +94,7 @@
     <PackageReference Include="Microsoft.Composition" Version="1.0.31" />
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="2.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.ComponentModelHost">
-      <Version>16.9.227</Version>
+      <Version>14.0.25424</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Imaging" Version="15.7.27703" />
     <PackageReference Include="Microsoft.VisualStudio.LanguageServices" Version="1.2.2" />
