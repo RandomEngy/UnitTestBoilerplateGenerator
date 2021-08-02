@@ -15,8 +15,8 @@ using UnitTestBoilerplate.Utilities;
 namespace UnitTestBoilerplate.Services
 {
 	[Export(typeof(ITestGenerationService))]
-    public class TestGenerationService : ITestGenerationService
-    {
+	public class TestGenerationService : ITestGenerationService
+	{
 		private static readonly HashSet<string> PropertyInjectionAttributeNames = new HashSet<string>
 		{
 			"Microsoft.Practices.Unity.DependencyAttribute",
@@ -39,7 +39,7 @@ namespace UnitTestBoilerplate.Services
 
 		public async Task<string> GenerateUnitTestFileAsync(
 			ProjectItemSummary selectedFile,
-			EnvDTE.Project targetProject, 
+			EnvDTE.Project targetProject,
 			TestFramework testFramework,
 			MockFramework mockFramework)
 		{
@@ -144,8 +144,8 @@ namespace UnitTestBoilerplate.Services
 		}
 
 		private async Task<TestGenerationContext> CollectTestGenerationContextAsync(
-			ProjectItemSummary selectedFile, 
-			string targetProjectNamespace, 
+			ProjectItemSummary selectedFile,
+			string targetProjectNamespace,
 			TestFramework testFramework,
 			MockFramework mockFramework,
 			IBoilerplateSettings settings)
@@ -162,11 +162,15 @@ namespace UnitTestBoilerplate.Services
 			SyntaxNode root = await document.GetSyntaxRootAsync();
 			SemanticModel semanticModel = await document.GetSemanticModelAsync();
 
-			SyntaxNode firstClassDeclaration = root.DescendantNodes().FirstOrDefault(node => node.Kind() == SyntaxKind.ClassDeclaration || node.Kind() == SyntaxKind.StructDeclaration);
+			SyntaxNode firstClassDeclaration = root.DescendantNodes().FirstOrDefault(node =>
+			{
+				var kind = node.Kind();
+				return kind == SyntaxKind.ClassDeclaration || kind == SyntaxKind.StructDeclaration || kind == SyntaxKind.RecordDeclaration;
+			});
 
 			if (firstClassDeclaration == null)
 			{
-				throw new InvalidOperationException("Could not find class or struct declaration.");
+				throw new InvalidOperationException("Could not find class, struct or record declaration.");
 			}
 
 			if (firstClassDeclaration.ChildTokens().Any(node => node.Kind() == SyntaxKind.AbstractKeyword))
@@ -1068,8 +1072,8 @@ namespace UnitTestBoilerplate.Services
 		{
 			// Group them by TypeBaseName to see which ones need a more unique name
 			var results = from t in injectedTypes
-				group t by t.TypeBaseName into g
-				select new { TypeBaseName = g.Key, Types = g.ToList() };
+						  group t by t.TypeBaseName into g
+						  select new { TypeBaseName = g.Key, Types = g.ToList() };
 
 			foreach (var result in results)
 			{
