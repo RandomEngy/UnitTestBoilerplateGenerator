@@ -5,20 +5,20 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class ClassWithGenericInterfaceTests
-	{
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var classWithGenericInterface = new ClassWithGenericInterface(TODO, TODO, TODO);
+    [TestClass]
+    public class ClassWithGenericInterfaceTests
+    {
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var classWithGenericInterface = new ClassWithGenericInterface(TODO, TODO, TODO);
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-		}
-	}
+            // Assert
+            Assert.Fail();
+        }
+    }
 }

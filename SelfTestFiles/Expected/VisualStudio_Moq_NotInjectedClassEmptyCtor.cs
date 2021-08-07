@@ -4,38 +4,38 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class NotInjectedClassEmptyCtorTests
-	{
-		private MockRepository mockRepository;
+    [TestClass]
+    public class NotInjectedClassEmptyCtorTests
+    {
+        private MockRepository mockRepository;
 
 
 
-		[TestInitialize]
-		public void TestInitialize()
-		{
-			this.mockRepository = new MockRepository(MockBehavior.Strict);
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            this.mockRepository = new MockRepository(MockBehavior.Strict);
 
 
-		}
+        }
 
-		private NotInjectedClassEmptyCtor CreateNotInjectedClassEmptyCtor()
-		{
-			return new NotInjectedClassEmptyCtor();
-		}
+        private NotInjectedClassEmptyCtor CreateNotInjectedClassEmptyCtor()
+        {
+            return new NotInjectedClassEmptyCtor();
+        }
 
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var notInjectedClassEmptyCtor = this.CreateNotInjectedClassEmptyCtor();
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var notInjectedClassEmptyCtor = this.CreateNotInjectedClassEmptyCtor();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-			this.mockRepository.VerifyAll();
-		}
-	}
+            // Assert
+            Assert.Fail();
+            this.mockRepository.VerifyAll();
+        }
+    }
 }

@@ -4,39 +4,39 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class PropertyInjectedClassMultipleTests
-	{
-		private StubISomeInterface stubSomeInterface;
-		private StubISomeOtherInterface stubSomeOtherInterface;
+    [TestClass]
+    public class PropertyInjectedClassMultipleTests
+    {
+        private StubISomeInterface stubSomeInterface;
+        private StubISomeOtherInterface stubSomeOtherInterface;
 
-		[TestInitialize]
-		public void TestInitialize()
-		{
-			this.stubSomeInterface = new StubISomeInterface();
-			this.stubSomeOtherInterface = new StubISomeOtherInterface();
-		}
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            this.stubSomeInterface = new StubISomeInterface();
+            this.stubSomeOtherInterface = new StubISomeOtherInterface();
+        }
 
-		private PropertyInjectedClassMultiple CreatePropertyInjectedClassMultiple()
-		{
-			return new PropertyInjectedClassMultiple
-			{
-				MyProperty = this.stubSomeInterface,
-				Property2 = this.stubSomeOtherInterface,
-			};
-		}
+        private PropertyInjectedClassMultiple CreatePropertyInjectedClassMultiple()
+        {
+            return new PropertyInjectedClassMultiple
+            {
+                MyProperty = this.stubSomeInterface,
+                Property2 = this.stubSomeOtherInterface,
+            };
+        }
 
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var propertyInjectedClassMultiple = this.CreatePropertyInjectedClassMultiple();
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var propertyInjectedClassMultiple = this.CreatePropertyInjectedClassMultiple();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-		}
-	}
+            // Assert
+            Assert.Fail();
+        }
+    }
 }

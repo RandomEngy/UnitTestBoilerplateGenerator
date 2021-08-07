@@ -5,45 +5,45 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class MixedInjectedClassMultipleTests
-	{
-		private IInterface3 stubInterface3;
-		private IInterface4 stubInterface4;
-		private ISomeInterface stubSomeInterface;
-		private ISomeOtherInterface stubSomeOtherInterface;
+    [TestClass]
+    public class MixedInjectedClassMultipleTests
+    {
+        private IInterface3 stubInterface3;
+        private IInterface4 stubInterface4;
+        private ISomeInterface stubSomeInterface;
+        private ISomeOtherInterface stubSomeOtherInterface;
 
-		[TestInitialize]
-		public void TestInitialize()
-		{
-			this.stubInterface3 = MockRepository.GenerateStub<IInterface3>();
-			this.stubInterface4 = MockRepository.GenerateStub<IInterface4>();
-			this.stubSomeInterface = MockRepository.GenerateStub<ISomeInterface>();
-			this.stubSomeOtherInterface = MockRepository.GenerateStub<ISomeOtherInterface>();
-		}
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            this.stubInterface3 = MockRepository.GenerateStub<IInterface3>();
+            this.stubInterface4 = MockRepository.GenerateStub<IInterface4>();
+            this.stubSomeInterface = MockRepository.GenerateStub<ISomeInterface>();
+            this.stubSomeOtherInterface = MockRepository.GenerateStub<ISomeOtherInterface>();
+        }
 
-		private MixedInjectedClassMultiple CreateMixedInjectedClassMultiple()
-		{
-			return new MixedInjectedClassMultiple(
-				this.stubSomeInterface,
-				this.stubSomeOtherInterface)
-			{
-				Interface3Property = this.stubInterface3,
-				Interface4Property = this.stubInterface4,
-			};
-		}
+        private MixedInjectedClassMultiple CreateMixedInjectedClassMultiple()
+        {
+            return new MixedInjectedClassMultiple(
+                this.stubSomeInterface,
+                this.stubSomeOtherInterface)
+            {
+                Interface3Property = this.stubInterface3,
+                Interface4Property = this.stubInterface4,
+            };
+        }
 
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var mixedInjectedClassMultiple = this.CreateMixedInjectedClassMultiple();
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var mixedInjectedClassMultiple = this.CreateMixedInjectedClassMultiple();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-		}
-	}
+            // Assert
+            Assert.Fail();
+        }
+    }
 }

@@ -5,21 +5,21 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class NotInjectedClassTests
-	{
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var mocker = new AutoMoqer();
-			var notInjectedClass = mocker.Create<NotInjectedClass>();
+    [TestClass]
+    public class NotInjectedClassTests
+    {
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var mocker = new AutoMoqer();
+            var notInjectedClass = mocker.Create<NotInjectedClass>();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-		}
-	}
+            // Assert
+            Assert.Fail();
+        }
+    }
 }

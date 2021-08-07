@@ -4,20 +4,20 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class PropertyInjectedClassMultipleTests
-	{
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var propertyInjectedClassMultiple = new PropertyInjectedClassMultiple();
+    [TestClass]
+    public class PropertyInjectedClassMultipleTests
+    {
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var propertyInjectedClassMultiple = new PropertyInjectedClassMultiple();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-		}
-	}
+            // Assert
+            Assert.Fail();
+        }
+    }
 }

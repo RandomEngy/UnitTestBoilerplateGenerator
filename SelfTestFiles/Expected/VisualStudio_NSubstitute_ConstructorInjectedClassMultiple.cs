@@ -5,37 +5,37 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class ConstructorInjectedClassMultipleTests
-	{
-		private ISomeInterface subSomeInterface;
-		private ISomeOtherInterface subSomeOtherInterface;
+    [TestClass]
+    public class ConstructorInjectedClassMultipleTests
+    {
+        private ISomeInterface subSomeInterface;
+        private ISomeOtherInterface subSomeOtherInterface;
 
-		[TestInitialize]
-		public void TestInitialize()
-		{
-			this.subSomeInterface = Substitute.For<ISomeInterface>();
-			this.subSomeOtherInterface = Substitute.For<ISomeOtherInterface>();
-		}
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            this.subSomeInterface = Substitute.For<ISomeInterface>();
+            this.subSomeOtherInterface = Substitute.For<ISomeOtherInterface>();
+        }
 
-		private ConstructorInjectedClassMultiple CreateConstructorInjectedClassMultiple()
-		{
-			return new ConstructorInjectedClassMultiple(
-				this.subSomeInterface,
-				this.subSomeOtherInterface);
-		}
+        private ConstructorInjectedClassMultiple CreateConstructorInjectedClassMultiple()
+        {
+            return new ConstructorInjectedClassMultiple(
+                this.subSomeInterface,
+                this.subSomeOtherInterface);
+        }
 
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var constructorInjectedClassMultiple = this.CreateConstructorInjectedClassMultiple();
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var constructorInjectedClassMultiple = this.CreateConstructorInjectedClassMultiple();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-		}
-	}
+            // Assert
+            Assert.Fail();
+        }
+    }
 }

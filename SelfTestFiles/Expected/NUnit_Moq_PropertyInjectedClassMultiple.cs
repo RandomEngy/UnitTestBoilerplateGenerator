@@ -5,44 +5,44 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestFixture]
-	public class PropertyInjectedClassMultipleTests
-	{
-		private MockRepository mockRepository;
+    [TestFixture]
+    public class PropertyInjectedClassMultipleTests
+    {
+        private MockRepository mockRepository;
 
-		private Mock<ISomeInterface> mockSomeInterface;
-		private Mock<ISomeOtherInterface> mockSomeOtherInterface;
+        private Mock<ISomeInterface> mockSomeInterface;
+        private Mock<ISomeOtherInterface> mockSomeOtherInterface;
 
-		[SetUp]
-		public void SetUp()
-		{
-			this.mockRepository = new MockRepository(MockBehavior.Strict);
+        [SetUp]
+        public void SetUp()
+        {
+            this.mockRepository = new MockRepository(MockBehavior.Strict);
 
-			this.mockSomeInterface = this.mockRepository.Create<ISomeInterface>();
-			this.mockSomeOtherInterface = this.mockRepository.Create<ISomeOtherInterface>();
-		}
+            this.mockSomeInterface = this.mockRepository.Create<ISomeInterface>();
+            this.mockSomeOtherInterface = this.mockRepository.Create<ISomeOtherInterface>();
+        }
 
-		private PropertyInjectedClassMultiple CreatePropertyInjectedClassMultiple()
-		{
-			return new PropertyInjectedClassMultiple
-			{
-				MyProperty = this.mockSomeInterface.Object,
-				Property2 = this.mockSomeOtherInterface.Object,
-			};
-		}
+        private PropertyInjectedClassMultiple CreatePropertyInjectedClassMultiple()
+        {
+            return new PropertyInjectedClassMultiple
+            {
+                MyProperty = this.mockSomeInterface.Object,
+                Property2 = this.mockSomeOtherInterface.Object,
+            };
+        }
 
-		[Test]
-		public void TestMethod1()
-		{
-			// Arrange
-			var propertyInjectedClassMultiple = this.CreatePropertyInjectedClassMultiple();
+        [Test]
+        public void TestMethod1()
+        {
+            // Arrange
+            var propertyInjectedClassMultiple = this.CreatePropertyInjectedClassMultiple();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-			this.mockRepository.VerifyAll();
-		}
-	}
+            // Assert
+            Assert.Fail();
+            this.mockRepository.VerifyAll();
+        }
+    }
 }

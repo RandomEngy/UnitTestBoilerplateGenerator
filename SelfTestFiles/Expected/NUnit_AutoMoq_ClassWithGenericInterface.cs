@@ -7,21 +7,21 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestFixture]
-	public class ClassWithGenericInterfaceTests
-	{
-		[Test]
-		public void TestMethod1()
-		{
-			// Arrange
-			var mocker = new AutoMoqer();
-			var classWithGenericInterface = mocker.Create<ClassWithGenericInterface>();
+    [TestFixture]
+    public class ClassWithGenericInterfaceTests
+    {
+        [Test]
+        public void TestMethod1()
+        {
+            // Arrange
+            var mocker = new AutoMoqer();
+            var classWithGenericInterface = mocker.Create<ClassWithGenericInterface>();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-		}
-	}
+            // Assert
+            Assert.Fail();
+        }
+    }
 }

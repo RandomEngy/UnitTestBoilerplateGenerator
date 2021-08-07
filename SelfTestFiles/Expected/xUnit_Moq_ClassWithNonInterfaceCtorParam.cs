@@ -6,37 +6,37 @@ using Xunit;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	public class ClassWithNonInterfaceCtorParamTests
-	{
-		private MockRepository mockRepository;
+    public class ClassWithNonInterfaceCtorParamTests
+    {
+        private MockRepository mockRepository;
 
-		private Mock<SomeClass> mockSomeClass;
+        private Mock<SomeClass> mockSomeClass;
 
-		public ClassWithNonInterfaceCtorParamTests()
-		{
-			this.mockRepository = new MockRepository(MockBehavior.Strict);
+        public ClassWithNonInterfaceCtorParamTests()
+        {
+            this.mockRepository = new MockRepository(MockBehavior.Strict);
 
-			this.mockSomeClass = this.mockRepository.Create<SomeClass>();
-		}
+            this.mockSomeClass = this.mockRepository.Create<SomeClass>();
+        }
 
-		private ClassWithNonInterfaceCtorParam CreateClassWithNonInterfaceCtorParam()
-		{
-			return new ClassWithNonInterfaceCtorParam(
-				this.mockSomeClass.Object);
-		}
+        private ClassWithNonInterfaceCtorParam CreateClassWithNonInterfaceCtorParam()
+        {
+            return new ClassWithNonInterfaceCtorParam(
+                this.mockSomeClass.Object);
+        }
 
-		[Fact]
-		public void TestMethod1()
-		{
-			// Arrange
-			var classWithNonInterfaceCtorParam = this.CreateClassWithNonInterfaceCtorParam();
+        [Fact]
+        public void TestMethod1()
+        {
+            // Arrange
+            var classWithNonInterfaceCtorParam = this.CreateClassWithNonInterfaceCtorParam();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.True(false);
-			this.mockRepository.VerifyAll();
-		}
-	}
+            // Assert
+            Assert.True(false);
+            this.mockRepository.VerifyAll();
+        }
+    }
 }

@@ -4,40 +4,40 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestFixture]
-	public class ClassWithOddCtorParamsTests
-	{
-		private MockRepository mockRepository;
+    [TestFixture]
+    public class ClassWithOddCtorParamsTests
+    {
+        private MockRepository mockRepository;
 
 
 
-		[SetUp]
-		public void SetUp()
-		{
-			this.mockRepository = new MockRepository(MockBehavior.Strict);
+        [SetUp]
+        public void SetUp()
+        {
+            this.mockRepository = new MockRepository(MockBehavior.Strict);
 
 
-		}
+        }
 
-		private ClassWithOddCtorParams CreateClassWithOddCtorParams()
-		{
-			return new ClassWithOddCtorParams(
-				TODO,
-				TODO);
-		}
+        private ClassWithOddCtorParams CreateClassWithOddCtorParams()
+        {
+            return new ClassWithOddCtorParams(
+                TODO,
+                TODO);
+        }
 
-		[Test]
-		public void TestMethod1()
-		{
-			// Arrange
-			var classWithOddCtorParams = this.CreateClassWithOddCtorParams();
+        [Test]
+        public void TestMethod1()
+        {
+            // Arrange
+            var classWithOddCtorParams = this.CreateClassWithOddCtorParams();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-			this.mockRepository.VerifyAll();
-		}
-	}
+            // Assert
+            Assert.Fail();
+            this.mockRepository.VerifyAll();
+        }
+    }
 }

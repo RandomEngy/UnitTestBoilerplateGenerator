@@ -5,42 +5,42 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class SomeStructTests
-	{
-		private MockRepository mockRepository;
+    [TestClass]
+    public class SomeStructTests
+    {
+        private MockRepository mockRepository;
 
 
 
-		[TestInitialize]
-		public void TestInitialize()
-		{
-			this.mockRepository = new MockRepository(MockBehavior.Strict);
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            this.mockRepository = new MockRepository(MockBehavior.Strict);
 
 
-		}
+        }
 
-		private SomeStruct CreateSomeStruct()
-		{
-			return new SomeStruct(
-				TODO,
-				TODO);
-		}
+        private SomeStruct CreateSomeStruct()
+        {
+            return new SomeStruct(
+                TODO,
+                TODO);
+        }
 
-		[TestMethod]
-		public void GetValue_StateUnderTest_ExpectedBehavior()
-		{
-			// Arrange
-			var someStruct = this.CreateSomeStruct();
-			int c = 0;
+        [TestMethod]
+        public void GetValue_StateUnderTest_ExpectedBehavior()
+        {
+            // Arrange
+            var someStruct = this.CreateSomeStruct();
+            int c = 0;
 
-			// Act
-			var result = someStruct.GetValue(
-				c);
+            // Act
+            var result = someStruct.GetValue(
+                c);
 
-			// Assert
-			Assert.Fail();
-			this.mockRepository.VerifyAll();
-		}
-	}
+            // Assert
+            Assert.Fail();
+            this.mockRepository.VerifyAll();
+        }
+    }
 }

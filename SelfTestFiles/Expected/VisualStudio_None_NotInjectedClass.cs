@@ -3,20 +3,20 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class NotInjectedClassTests
-	{
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var notInjectedClass = new NotInjectedClass();
+    [TestClass]
+    public class NotInjectedClassTests
+    {
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var notInjectedClass = new NotInjectedClass();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-		}
-	}
+            // Assert
+            Assert.Fail();
+        }
+    }
 }

@@ -3,33 +3,33 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class NotInjectedClassTests
-	{
+    [TestClass]
+    public class NotInjectedClassTests
+    {
 
 
-		[TestInitialize]
-		public void TestInitialize()
-		{
+        [TestInitialize]
+        public void TestInitialize()
+        {
 
-		}
+        }
 
-		private NotInjectedClass CreateNotInjectedClass()
-		{
-			return new NotInjectedClass();
-		}
+        private NotInjectedClass CreateNotInjectedClass()
+        {
+            return new NotInjectedClass();
+        }
 
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var notInjectedClass = this.CreateNotInjectedClass();
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var notInjectedClass = this.CreateNotInjectedClass();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-		}
-	}
+            // Assert
+            Assert.Fail();
+        }
+    }
 }

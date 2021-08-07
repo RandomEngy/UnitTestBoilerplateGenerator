@@ -5,34 +5,34 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class ClassWithNonInterfaceCtorParamTests
-	{
-		private SomeClass fakeSomeClass;
+    [TestClass]
+    public class ClassWithNonInterfaceCtorParamTests
+    {
+        private SomeClass fakeSomeClass;
 
-		[TestInitialize]
-		public void TestInitialize()
-		{
-			this.fakeSomeClass = A.Fake<SomeClass>();
-		}
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            this.fakeSomeClass = A.Fake<SomeClass>();
+        }
 
-		private ClassWithNonInterfaceCtorParam CreateClassWithNonInterfaceCtorParam()
-		{
-			return new ClassWithNonInterfaceCtorParam(
-				this.fakeSomeClass);
-		}
+        private ClassWithNonInterfaceCtorParam CreateClassWithNonInterfaceCtorParam()
+        {
+            return new ClassWithNonInterfaceCtorParam(
+                this.fakeSomeClass);
+        }
 
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var classWithNonInterfaceCtorParam = this.CreateClassWithNonInterfaceCtorParam();
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var classWithNonInterfaceCtorParam = this.CreateClassWithNonInterfaceCtorParam();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-		}
-	}
+            // Assert
+            Assert.Fail();
+        }
+    }
 }

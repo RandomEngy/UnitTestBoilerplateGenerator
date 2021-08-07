@@ -5,39 +5,39 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestFixture]
-	public class ConstructorInjectedClassSingleTests
-	{
-		private MockRepository mockRepository;
+    [TestFixture]
+    public class ConstructorInjectedClassSingleTests
+    {
+        private MockRepository mockRepository;
 
-		private Mock<ISomeInterface> mockSomeInterface;
+        private Mock<ISomeInterface> mockSomeInterface;
 
-		[SetUp]
-		public void SetUp()
-		{
-			this.mockRepository = new MockRepository(MockBehavior.Strict);
+        [SetUp]
+        public void SetUp()
+        {
+            this.mockRepository = new MockRepository(MockBehavior.Strict);
 
-			this.mockSomeInterface = this.mockRepository.Create<ISomeInterface>();
-		}
+            this.mockSomeInterface = this.mockRepository.Create<ISomeInterface>();
+        }
 
-		private ConstructorInjectedClassSingle CreateConstructorInjectedClassSingle()
-		{
-			return new ConstructorInjectedClassSingle(
-				this.mockSomeInterface.Object);
-		}
+        private ConstructorInjectedClassSingle CreateConstructorInjectedClassSingle()
+        {
+            return new ConstructorInjectedClassSingle(
+                this.mockSomeInterface.Object);
+        }
 
-		[Test]
-		public void TestMethod1()
-		{
-			// Arrange
-			var constructorInjectedClassSingle = this.CreateConstructorInjectedClassSingle();
+        [Test]
+        public void TestMethod1()
+        {
+            // Arrange
+            var constructorInjectedClassSingle = this.CreateConstructorInjectedClassSingle();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-			this.mockRepository.VerifyAll();
-		}
-	}
+            // Assert
+            Assert.Fail();
+            this.mockRepository.VerifyAll();
+        }
+    }
 }

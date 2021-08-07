@@ -5,39 +5,39 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class ClassWithNonInterfaceCtorParamTests
-	{
-		private MockRepository mockRepository;
+    [TestClass]
+    public class ClassWithNonInterfaceCtorParamTests
+    {
+        private MockRepository mockRepository;
 
-		private Mock<SomeClass> mockSomeClass;
+        private Mock<SomeClass> mockSomeClass;
 
-		[TestInitialize]
-		public void TestInitialize()
-		{
-			this.mockRepository = new MockRepository(MockBehavior.Strict);
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            this.mockRepository = new MockRepository(MockBehavior.Strict);
 
-			this.mockSomeClass = this.mockRepository.Create<SomeClass>();
-		}
+            this.mockSomeClass = this.mockRepository.Create<SomeClass>();
+        }
 
-		private ClassWithNonInterfaceCtorParam CreateClassWithNonInterfaceCtorParam()
-		{
-			return new ClassWithNonInterfaceCtorParam(
-				this.mockSomeClass.Object);
-		}
+        private ClassWithNonInterfaceCtorParam CreateClassWithNonInterfaceCtorParam()
+        {
+            return new ClassWithNonInterfaceCtorParam(
+                this.mockSomeClass.Object);
+        }
 
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var classWithNonInterfaceCtorParam = this.CreateClassWithNonInterfaceCtorParam();
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var classWithNonInterfaceCtorParam = this.CreateClassWithNonInterfaceCtorParam();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-			this.mockRepository.VerifyAll();
-		}
-	}
+            // Assert
+            Assert.Fail();
+            this.mockRepository.VerifyAll();
+        }
+    }
 }

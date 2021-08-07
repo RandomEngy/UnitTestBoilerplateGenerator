@@ -3,20 +3,20 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class ClassWithOddCtorParamsTests
-	{
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var classWithOddCtorParams = new ClassWithOddCtorParams(TODO, TODO);
+    [TestClass]
+    public class ClassWithOddCtorParamsTests
+    {
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var classWithOddCtorParams = new ClassWithOddCtorParams(TODO, TODO);
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-		}
-	}
+            // Assert
+            Assert.Fail();
+        }
+    }
 }

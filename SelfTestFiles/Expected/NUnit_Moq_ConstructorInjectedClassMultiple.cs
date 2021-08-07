@@ -5,42 +5,42 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestFixture]
-	public class ConstructorInjectedClassMultipleTests
-	{
-		private MockRepository mockRepository;
+    [TestFixture]
+    public class ConstructorInjectedClassMultipleTests
+    {
+        private MockRepository mockRepository;
 
-		private Mock<ISomeInterface> mockSomeInterface;
-		private Mock<ISomeOtherInterface> mockSomeOtherInterface;
+        private Mock<ISomeInterface> mockSomeInterface;
+        private Mock<ISomeOtherInterface> mockSomeOtherInterface;
 
-		[SetUp]
-		public void SetUp()
-		{
-			this.mockRepository = new MockRepository(MockBehavior.Strict);
+        [SetUp]
+        public void SetUp()
+        {
+            this.mockRepository = new MockRepository(MockBehavior.Strict);
 
-			this.mockSomeInterface = this.mockRepository.Create<ISomeInterface>();
-			this.mockSomeOtherInterface = this.mockRepository.Create<ISomeOtherInterface>();
-		}
+            this.mockSomeInterface = this.mockRepository.Create<ISomeInterface>();
+            this.mockSomeOtherInterface = this.mockRepository.Create<ISomeOtherInterface>();
+        }
 
-		private ConstructorInjectedClassMultiple CreateConstructorInjectedClassMultiple()
-		{
-			return new ConstructorInjectedClassMultiple(
-				this.mockSomeInterface.Object,
-				this.mockSomeOtherInterface.Object);
-		}
+        private ConstructorInjectedClassMultiple CreateConstructorInjectedClassMultiple()
+        {
+            return new ConstructorInjectedClassMultiple(
+                this.mockSomeInterface.Object,
+                this.mockSomeOtherInterface.Object);
+        }
 
-		[Test]
-		public void TestMethod1()
-		{
-			// Arrange
-			var constructorInjectedClassMultiple = this.CreateConstructorInjectedClassMultiple();
+        [Test]
+        public void TestMethod1()
+        {
+            // Arrange
+            var constructorInjectedClassMultiple = this.CreateConstructorInjectedClassMultiple();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-			this.mockRepository.VerifyAll();
-		}
-	}
+            // Assert
+            Assert.Fail();
+            this.mockRepository.VerifyAll();
+        }
+    }
 }

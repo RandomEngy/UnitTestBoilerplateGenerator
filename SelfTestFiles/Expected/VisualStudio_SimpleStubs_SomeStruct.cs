@@ -4,37 +4,37 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class SomeStructTests
-	{
+    [TestClass]
+    public class SomeStructTests
+    {
 
 
-		[TestInitialize]
-		public void TestInitialize()
-		{
+        [TestInitialize]
+        public void TestInitialize()
+        {
 
-		}
+        }
 
-		private SomeStruct CreateSomeStruct()
-		{
-			return new SomeStruct(
-				TODO,
-				TODO);
-		}
+        private SomeStruct CreateSomeStruct()
+        {
+            return new SomeStruct(
+                TODO,
+                TODO);
+        }
 
-		[TestMethod]
-		public void GetValue_StateUnderTest_ExpectedBehavior()
-		{
-			// Arrange
-			var someStruct = this.CreateSomeStruct();
-			int c = 0;
+        [TestMethod]
+        public void GetValue_StateUnderTest_ExpectedBehavior()
+        {
+            // Arrange
+            var someStruct = this.CreateSomeStruct();
+            int c = 0;
 
-			// Act
-			var result = someStruct.GetValue(
-				c);
+            // Act
+            var result = someStruct.GetValue(
+                c);
 
-			// Assert
-			Assert.Fail();
-		}
-	}
+            // Assert
+            Assert.Fail();
+        }
+    }
 }

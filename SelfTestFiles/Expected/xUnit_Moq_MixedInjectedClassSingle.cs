@@ -6,42 +6,42 @@ using Xunit;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	public class MixedInjectedClassSingleTests
-	{
-		private MockRepository mockRepository;
+    public class MixedInjectedClassSingleTests
+    {
+        private MockRepository mockRepository;
 
-		private Mock<IInterface3> mockInterface3;
-		private Mock<ISomeInterface> mockSomeInterface;
+        private Mock<IInterface3> mockInterface3;
+        private Mock<ISomeInterface> mockSomeInterface;
 
-		public MixedInjectedClassSingleTests()
-		{
-			this.mockRepository = new MockRepository(MockBehavior.Strict);
+        public MixedInjectedClassSingleTests()
+        {
+            this.mockRepository = new MockRepository(MockBehavior.Strict);
 
-			this.mockInterface3 = this.mockRepository.Create<IInterface3>();
-			this.mockSomeInterface = this.mockRepository.Create<ISomeInterface>();
-		}
+            this.mockInterface3 = this.mockRepository.Create<IInterface3>();
+            this.mockSomeInterface = this.mockRepository.Create<ISomeInterface>();
+        }
 
-		private MixedInjectedClassSingle CreateMixedInjectedClassSingle()
-		{
-			return new MixedInjectedClassSingle(
-				this.mockSomeInterface.Object)
-			{
-				Interface3Property = this.mockInterface3.Object,
-			};
-		}
+        private MixedInjectedClassSingle CreateMixedInjectedClassSingle()
+        {
+            return new MixedInjectedClassSingle(
+                this.mockSomeInterface.Object)
+            {
+                Interface3Property = this.mockInterface3.Object,
+            };
+        }
 
-		[Fact]
-		public void TestMethod1()
-		{
-			// Arrange
-			var mixedInjectedClassSingle = this.CreateMixedInjectedClassSingle();
+        [Fact]
+        public void TestMethod1()
+        {
+            // Arrange
+            var mixedInjectedClassSingle = this.CreateMixedInjectedClassSingle();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.True(false);
-			this.mockRepository.VerifyAll();
-		}
-	}
+            // Assert
+            Assert.True(false);
+            this.mockRepository.VerifyAll();
+        }
+    }
 }

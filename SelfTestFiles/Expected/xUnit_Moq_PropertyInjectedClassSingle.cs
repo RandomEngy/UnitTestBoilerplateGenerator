@@ -6,39 +6,39 @@ using Xunit;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	public class PropertyInjectedClassSingleTests
-	{
-		private MockRepository mockRepository;
+    public class PropertyInjectedClassSingleTests
+    {
+        private MockRepository mockRepository;
 
-		private Mock<ISomeInterface> mockSomeInterface;
+        private Mock<ISomeInterface> mockSomeInterface;
 
-		public PropertyInjectedClassSingleTests()
-		{
-			this.mockRepository = new MockRepository(MockBehavior.Strict);
+        public PropertyInjectedClassSingleTests()
+        {
+            this.mockRepository = new MockRepository(MockBehavior.Strict);
 
-			this.mockSomeInterface = this.mockRepository.Create<ISomeInterface>();
-		}
+            this.mockSomeInterface = this.mockRepository.Create<ISomeInterface>();
+        }
 
-		private PropertyInjectedClassSingle CreatePropertyInjectedClassSingle()
-		{
-			return new PropertyInjectedClassSingle
-			{
-				MyProperty = this.mockSomeInterface.Object,
-			};
-		}
+        private PropertyInjectedClassSingle CreatePropertyInjectedClassSingle()
+        {
+            return new PropertyInjectedClassSingle
+            {
+                MyProperty = this.mockSomeInterface.Object,
+            };
+        }
 
-		[Fact]
-		public void TestMethod1()
-		{
-			// Arrange
-			var propertyInjectedClassSingle = this.CreatePropertyInjectedClassSingle();
+        [Fact]
+        public void TestMethod1()
+        {
+            // Arrange
+            var propertyInjectedClassSingle = this.CreatePropertyInjectedClassSingle();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.True(false);
-			this.mockRepository.VerifyAll();
-		}
-	}
+            // Assert
+            Assert.True(false);
+            this.mockRepository.VerifyAll();
+        }
+    }
 }

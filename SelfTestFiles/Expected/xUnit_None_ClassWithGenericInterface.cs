@@ -6,19 +6,19 @@ using Xunit;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	public class ClassWithGenericInterfaceTests
-	{
-		[Fact]
-		public void TestMethod1()
-		{
-			// Arrange
-			var classWithGenericInterface = new ClassWithGenericInterface(TODO, TODO, TODO);
+    public class ClassWithGenericInterfaceTests
+    {
+        [Fact]
+        public void TestMethod1()
+        {
+            // Arrange
+            var classWithGenericInterface = new ClassWithGenericInterface(TODO, TODO, TODO);
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.True(false);
-		}
-	}
+            // Assert
+            Assert.True(false);
+        }
+    }
 }

@@ -5,34 +5,34 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class ConstructorInjectedClassSingleTests
-	{
-		private ISomeInterface fakeSomeInterface;
+    [TestClass]
+    public class ConstructorInjectedClassSingleTests
+    {
+        private ISomeInterface fakeSomeInterface;
 
-		[TestInitialize]
-		public void TestInitialize()
-		{
-			this.fakeSomeInterface = A.Fake<ISomeInterface>();
-		}
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            this.fakeSomeInterface = A.Fake<ISomeInterface>();
+        }
 
-		private ConstructorInjectedClassSingle CreateConstructorInjectedClassSingle()
-		{
-			return new ConstructorInjectedClassSingle(
-				this.fakeSomeInterface);
-		}
+        private ConstructorInjectedClassSingle CreateConstructorInjectedClassSingle()
+        {
+            return new ConstructorInjectedClassSingle(
+                this.fakeSomeInterface);
+        }
 
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var constructorInjectedClassSingle = this.CreateConstructorInjectedClassSingle();
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var constructorInjectedClassSingle = this.CreateConstructorInjectedClassSingle();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-		}
-	}
+            // Assert
+            Assert.Fail();
+        }
+    }
 }

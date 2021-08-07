@@ -6,21 +6,21 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class ConstructorInjectedClassMultipleTests
-	{
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var mocker = new AutoMoqer();
-			var constructorInjectedClassMultiple = mocker.Create<ConstructorInjectedClassMultiple>();
+    [TestClass]
+    public class ConstructorInjectedClassMultipleTests
+    {
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var mocker = new AutoMoqer();
+            var constructorInjectedClassMultiple = mocker.Create<ConstructorInjectedClassMultiple>();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-		}
-	}
+            // Assert
+            Assert.Fail();
+        }
+    }
 }

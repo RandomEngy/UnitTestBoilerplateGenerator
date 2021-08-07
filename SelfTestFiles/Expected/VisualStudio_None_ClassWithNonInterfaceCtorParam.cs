@@ -4,20 +4,20 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class ClassWithNonInterfaceCtorParamTests
-	{
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var classWithNonInterfaceCtorParam = new ClassWithNonInterfaceCtorParam(TODO);
+    [TestClass]
+    public class ClassWithNonInterfaceCtorParamTests
+    {
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var classWithNonInterfaceCtorParam = new ClassWithNonInterfaceCtorParam(TODO);
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-		}
-	}
+            // Assert
+            Assert.Fail();
+        }
+    }
 }

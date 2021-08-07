@@ -5,44 +5,44 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestFixture]
-	public class MixedInjectedClassSingleTests
-	{
-		private MockRepository mockRepository;
+    [TestFixture]
+    public class MixedInjectedClassSingleTests
+    {
+        private MockRepository mockRepository;
 
-		private Mock<IInterface3> mockInterface3;
-		private Mock<ISomeInterface> mockSomeInterface;
+        private Mock<IInterface3> mockInterface3;
+        private Mock<ISomeInterface> mockSomeInterface;
 
-		[SetUp]
-		public void SetUp()
-		{
-			this.mockRepository = new MockRepository(MockBehavior.Strict);
+        [SetUp]
+        public void SetUp()
+        {
+            this.mockRepository = new MockRepository(MockBehavior.Strict);
 
-			this.mockInterface3 = this.mockRepository.Create<IInterface3>();
-			this.mockSomeInterface = this.mockRepository.Create<ISomeInterface>();
-		}
+            this.mockInterface3 = this.mockRepository.Create<IInterface3>();
+            this.mockSomeInterface = this.mockRepository.Create<ISomeInterface>();
+        }
 
-		private MixedInjectedClassSingle CreateMixedInjectedClassSingle()
-		{
-			return new MixedInjectedClassSingle(
-				this.mockSomeInterface.Object)
-			{
-				Interface3Property = this.mockInterface3.Object,
-			};
-		}
+        private MixedInjectedClassSingle CreateMixedInjectedClassSingle()
+        {
+            return new MixedInjectedClassSingle(
+                this.mockSomeInterface.Object)
+            {
+                Interface3Property = this.mockInterface3.Object,
+            };
+        }
 
-		[Test]
-		public void TestMethod1()
-		{
-			// Arrange
-			var mixedInjectedClassSingle = this.CreateMixedInjectedClassSingle();
+        [Test]
+        public void TestMethod1()
+        {
+            // Arrange
+            var mixedInjectedClassSingle = this.CreateMixedInjectedClassSingle();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-			this.mockRepository.VerifyAll();
-		}
-	}
+            // Assert
+            Assert.Fail();
+            this.mockRepository.VerifyAll();
+        }
+    }
 }

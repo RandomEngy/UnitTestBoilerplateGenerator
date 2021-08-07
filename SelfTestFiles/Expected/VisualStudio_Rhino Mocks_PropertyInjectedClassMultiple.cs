@@ -5,39 +5,39 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class PropertyInjectedClassMultipleTests
-	{
-		private ISomeInterface stubSomeInterface;
-		private ISomeOtherInterface stubSomeOtherInterface;
+    [TestClass]
+    public class PropertyInjectedClassMultipleTests
+    {
+        private ISomeInterface stubSomeInterface;
+        private ISomeOtherInterface stubSomeOtherInterface;
 
-		[TestInitialize]
-		public void TestInitialize()
-		{
-			this.stubSomeInterface = MockRepository.GenerateStub<ISomeInterface>();
-			this.stubSomeOtherInterface = MockRepository.GenerateStub<ISomeOtherInterface>();
-		}
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            this.stubSomeInterface = MockRepository.GenerateStub<ISomeInterface>();
+            this.stubSomeOtherInterface = MockRepository.GenerateStub<ISomeOtherInterface>();
+        }
 
-		private PropertyInjectedClassMultiple CreatePropertyInjectedClassMultiple()
-		{
-			return new PropertyInjectedClassMultiple
-			{
-				MyProperty = this.stubSomeInterface,
-				Property2 = this.stubSomeOtherInterface,
-			};
-		}
+        private PropertyInjectedClassMultiple CreatePropertyInjectedClassMultiple()
+        {
+            return new PropertyInjectedClassMultiple
+            {
+                MyProperty = this.stubSomeInterface,
+                Property2 = this.stubSomeOtherInterface,
+            };
+        }
 
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var propertyInjectedClassMultiple = this.CreatePropertyInjectedClassMultiple();
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var propertyInjectedClassMultiple = this.CreatePropertyInjectedClassMultiple();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-		}
-	}
+            // Assert
+            Assert.Fail();
+        }
+    }
 }

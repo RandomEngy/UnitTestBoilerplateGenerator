@@ -5,21 +5,21 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class ClassWithOddCtorParamsTests
-	{
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var mocker = new AutoMoqer();
-			var classWithOddCtorParams = mocker.Create<ClassWithOddCtorParams>();
+    [TestClass]
+    public class ClassWithOddCtorParamsTests
+    {
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var mocker = new AutoMoqer();
+            var classWithOddCtorParams = mocker.Create<ClassWithOddCtorParams>();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-		}
-	}
+            // Assert
+            Assert.Fail();
+        }
+    }
 }

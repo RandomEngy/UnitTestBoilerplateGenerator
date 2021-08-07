@@ -5,39 +5,39 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class MixedInjectedClassSingleTests
-	{
-		private IInterface3 fakeInterface3;
-		private ISomeInterface fakeSomeInterface;
+    [TestClass]
+    public class MixedInjectedClassSingleTests
+    {
+        private IInterface3 fakeInterface3;
+        private ISomeInterface fakeSomeInterface;
 
-		[TestInitialize]
-		public void TestInitialize()
-		{
-			this.fakeInterface3 = A.Fake<IInterface3>();
-			this.fakeSomeInterface = A.Fake<ISomeInterface>();
-		}
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            this.fakeInterface3 = A.Fake<IInterface3>();
+            this.fakeSomeInterface = A.Fake<ISomeInterface>();
+        }
 
-		private MixedInjectedClassSingle CreateMixedInjectedClassSingle()
-		{
-			return new MixedInjectedClassSingle(
-				this.fakeSomeInterface)
-			{
-				Interface3Property = this.fakeInterface3,
-			};
-		}
+        private MixedInjectedClassSingle CreateMixedInjectedClassSingle()
+        {
+            return new MixedInjectedClassSingle(
+                this.fakeSomeInterface)
+            {
+                Interface3Property = this.fakeInterface3,
+            };
+        }
 
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var mixedInjectedClassSingle = this.CreateMixedInjectedClassSingle();
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var mixedInjectedClassSingle = this.CreateMixedInjectedClassSingle();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-		}
-	}
+            // Assert
+            Assert.Fail();
+        }
+    }
 }

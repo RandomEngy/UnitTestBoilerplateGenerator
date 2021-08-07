@@ -4,38 +4,38 @@ using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	[TestClass]
-	public class NotInjectedClassTests
-	{
-		private MockRepository mockRepository;
+    [TestClass]
+    public class NotInjectedClassTests
+    {
+        private MockRepository mockRepository;
 
 
 
-		[TestInitialize]
-		public void TestInitialize()
-		{
-			this.mockRepository = new MockRepository(MockBehavior.Strict);
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            this.mockRepository = new MockRepository(MockBehavior.Strict);
 
 
-		}
+        }
 
-		private NotInjectedClass CreateNotInjectedClass()
-		{
-			return new NotInjectedClass();
-		}
+        private NotInjectedClass CreateNotInjectedClass()
+        {
+            return new NotInjectedClass();
+        }
 
-		[TestMethod]
-		public void TestMethod1()
-		{
-			// Arrange
-			var notInjectedClass = this.CreateNotInjectedClass();
+        [TestMethod]
+        public void TestMethod1()
+        {
+            // Arrange
+            var notInjectedClass = this.CreateNotInjectedClass();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.Fail();
-			this.mockRepository.VerifyAll();
-		}
-	}
+            // Assert
+            Assert.Fail();
+            this.mockRepository.VerifyAll();
+        }
+    }
 }

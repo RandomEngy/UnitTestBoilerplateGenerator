@@ -5,36 +5,36 @@ using Xunit;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
 {
-	public class NotInjectedClassTests
-	{
-		private MockRepository mockRepository;
+    public class NotInjectedClassTests
+    {
+        private MockRepository mockRepository;
 
 
 
-		public NotInjectedClassTests()
-		{
-			this.mockRepository = new MockRepository(MockBehavior.Strict);
+        public NotInjectedClassTests()
+        {
+            this.mockRepository = new MockRepository(MockBehavior.Strict);
 
 
-		}
+        }
 
-		private NotInjectedClass CreateNotInjectedClass()
-		{
-			return new NotInjectedClass();
-		}
+        private NotInjectedClass CreateNotInjectedClass()
+        {
+            return new NotInjectedClass();
+        }
 
-		[Fact]
-		public void TestMethod1()
-		{
-			// Arrange
-			var notInjectedClass = this.CreateNotInjectedClass();
+        [Fact]
+        public void TestMethod1()
+        {
+            // Arrange
+            var notInjectedClass = this.CreateNotInjectedClass();
 
-			// Act
+            // Act
 
 
-			// Assert
-			Assert.True(false);
-			this.mockRepository.VerifyAll();
-		}
-	}
+            // Assert
+            Assert.True(false);
+            this.mockRepository.VerifyAll();
+        }
+    }
 }
