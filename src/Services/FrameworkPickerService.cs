@@ -10,6 +10,7 @@ using EnvDTE;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnitTestBoilerplate.Model;
+using VSLangProj;
 
 namespace UnitTestBoilerplate.Services
 {
@@ -144,7 +145,7 @@ namespace UnitTestBoilerplate.Services
 			var result = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
 			// First look for direct references from loaded project
-			var vsProject = project.Object as VSLangProj.VSProject;
+			var vsProject = project.Object as VSProject;
 			foreach (VSLangProj.Reference reference in vsProject.References)
 			{
 				result.Add(reference.Name);
