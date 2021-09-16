@@ -74,7 +74,9 @@ namespace UnitTestBoilerplate.Utilities
 			}
 
 			string nextModifier;
+			string arg;
 			SplitToken(ref myModifier, out nextModifier);
+			SplitModifierArg(ref myModifier, out arg);
 
 			switch (myModifier)
 			{
@@ -83,6 +85,12 @@ namespace UnitTestBoilerplate.Utilities
 					break;
 				case "NewLineIfPopulated":
 					tokenValue = RunNewLineIfPopulatedReplacement(tokenValue);
+					break;
+				case "Remove":
+					tokenValue = RunRemoveReplacement(tokenValue, arg);
+					break;
+				case "LowerCase":
+					tokenValue = RunLowerCaseReplacement(tokenValue);
 					break;
 				default:
 					// Ignore the modifier
@@ -110,6 +118,20 @@ namespace UnitTestBoilerplate.Utilities
 			}
 		}
 
+		private static void SplitModifierArg(ref string modifier, out string arg)
+		{
+			int parenthesisIndex = modifier.IndexOf("(", StringComparison.Ordinal);
+			if (parenthesisIndex <= 0)
+			{
+				arg = string.Empty;
+			}
+			else
+			{
+				arg = modifier.Substring(parenthesisIndex + 1, modifier.Length - parenthesisIndex - 2);
+				modifier = modifier.Substring(0, parenthesisIndex);
+			}
+		}
+
 		#endregion Split Functions
 
 		#region Modifier Functions
@@ -128,6 +150,17 @@ namespace UnitTestBoilerplate.Utilities
 				tokenValueBuilder.AppendLine();
 			}
 			return tokenValueBuilder.ToString();
+		}
+
+		private static string RunRemoveReplacement(string tokenValue, string textToRemove)
+		{
+			return tokenValue.Replace(textToRemove, "");
+		}
+
+		private static string RunLowerCaseReplacement(string tokenValue)
+		{
+			tokenValue = tokenValue.ToLower();
+			return tokenValue;
 		}
 
 		#endregion Modifier Functions
