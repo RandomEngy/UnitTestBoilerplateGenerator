@@ -440,6 +440,10 @@ namespace UnitTestBoilerplate.Services
 		{
 			switch (tokenName)
 			{
+				case "":
+					builder.Append("$");
+					break;
+
 				case "Namespace":
 					builder.Append(context.UnitTestNamespace);
 					break;
