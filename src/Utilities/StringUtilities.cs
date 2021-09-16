@@ -5,6 +5,8 @@ namespace UnitTestBoilerplate.Utilities
 {
 	public static class StringUtilities
 	{
+		#region ReplaceTokens
+
 		public static string ReplaceTokens(string template, Action<string, int, StringBuilder> tokenReplacementAction)
 		{
 			var builder = new StringBuilder();
@@ -35,33 +37,7 @@ namespace UnitTestBoilerplate.Utilities
 						// some are dependent on the test framework (attributes), some need to pull down other templates and loop through mock fields
 						string tokenText = template.Substring(i + 1, endIndex - i - 1);
 
-						int periodIndex = tokenText.IndexOf(".", StringComparison.Ordinal);
-						if (periodIndex > 0)
-						{
-							string modifier = tokenText.Substring(periodIndex + 1);
-							string tokenName = tokenText.Substring(0, periodIndex);
-
-							switch (modifier)
-							{
-								case "CamelCase":
-									RunCamelCaseReplacement(tokenName, tokenReplacementAction, i, builder);
-									break;
-
-								case "NewLineIfPopulated":
-									RunNewLineIfPopulatedReplacement(tokenName, tokenReplacementAction, i, builder);
-									break;
-
-								default:
-									// Ignore the modifier
-									tokenReplacementAction(tokenText, i, builder);
-									break;
-							}
-						}
-						else
-						{
-							tokenReplacementAction(tokenText, i, builder);
-						}
-
+						ProcessTokenWithAnyModifiers(tokenText, tokenReplacementAction, i, builder);
 						i = endIndex;
 					}
 				}
@@ -74,28 +50,89 @@ namespace UnitTestBoilerplate.Utilities
 			return builder.ToString();
 		}
 
-		private static void RunCamelCaseReplacement(string tokenName, Action<string, int, StringBuilder> tokenReplacementAction, int propertyIndex, StringBuilder builder)
-		{
-			var tokenValueBuilder = new StringBuilder();
+		#region Process Functions
 
-			tokenReplacementAction(tokenName, propertyIndex, tokenValueBuilder);
+		private static void ProcessTokenWithAnyModifiers(string tokenText, Action<string, int, StringBuilder> tokenReplacementAction, int propertyIndex, StringBuilder builder)
+		{
+			string modifier;
+			SplitToken(ref tokenText, out modifier);
+
+			var tokenValueBuilder = new StringBuilder();
+			tokenReplacementAction(tokenText, propertyIndex, tokenValueBuilder);
 			string tokenValue = tokenValueBuilder.ToString();
 
-			builder.Append(tokenValue.Substring(0, 1).ToLowerInvariant() + tokenValue.Substring(1));
-		}
-
-		private static void RunNewLineIfPopulatedReplacement(string tokenName, Action<string, int, StringBuilder> tokenReplacementAction, int propertyIndex, StringBuilder builder)
-		{
-			var tokenValueBuilder = new StringBuilder();
-			tokenReplacementAction(tokenName, propertyIndex, tokenValueBuilder);
-			string tokenValue = tokenValueBuilder.ToString();
+			tokenValue = ProcessModifiers(tokenValue, modifier);
 
 			builder.Append(tokenValue);
-			if (!string.IsNullOrEmpty(tokenValue))
+		}
+
+		private static string ProcessModifiers(string tokenValue, string myModifier)
+		{
+			if(string.IsNullOrEmpty(myModifier))
 			{
-				builder.AppendLine();
+				return tokenValue;
+			}
+
+			string nextModifier;
+			SplitToken(ref myModifier, out nextModifier);
+
+			switch (myModifier)
+			{
+				case "CamelCase":
+					tokenValue = RunCamelCaseReplacement(tokenValue);
+					break;
+				case "NewLineIfPopulated":
+					tokenValue = RunNewLineIfPopulatedReplacement(tokenValue);
+					break;
+				default:
+					// Ignore the modifier
+					break;
+			}
+
+			return ProcessModifiers(tokenValue, nextModifier);
+		}
+
+		#endregion Process Functions
+
+		#region Split Functions
+
+		private static void SplitToken(ref string tokenText, out string modifier)
+		{
+			int periodIndex = tokenText.IndexOf(".", StringComparison.Ordinal);
+			if (periodIndex <= 0)
+			{
+				modifier = string.Empty;
+			}
+			else
+			{
+				modifier = tokenText.Substring(periodIndex + 1);
+				tokenText = tokenText.Substring(0, periodIndex);
 			}
 		}
+
+		#endregion Split Functions
+
+		#region Modifier Functions
+
+		private static string RunCamelCaseReplacement(string tokenValue)
+		{
+			return tokenValue.Substring(0, 1).ToLowerInvariant() + tokenValue.Substring(1);
+		}
+
+		private static string RunNewLineIfPopulatedReplacement(string tokenValue)
+		{
+			var tokenValueBuilder = new StringBuilder(tokenValue);
+
+			if (!string.IsNullOrEmpty(tokenValue))
+			{
+				tokenValueBuilder.AppendLine();
+			}
+			return tokenValueBuilder.ToString();
+		}
+
+		#endregion Modifier Functions
+
+		#endregion ReplaceTokens
 
 		public static string GetShortNameFromFullTypeName(string fullName)
 		{
