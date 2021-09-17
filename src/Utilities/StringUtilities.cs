@@ -89,6 +89,9 @@ namespace UnitTestBoilerplate.Utilities
 				case "Remove":
 					tokenValue = RunRemoveReplacement(tokenValue, arg);
 					break;
+				case "RemoveGeneric":
+					tokenValue = RunRemoveGenericReplacement(tokenValue, arg);
+					break;
 				case "LowerCase":
 					tokenValue = RunLowerCaseReplacement(tokenValue);
 					break;
@@ -155,6 +158,45 @@ namespace UnitTestBoilerplate.Utilities
 		private static string RunRemoveReplacement(string tokenValue, string textToRemove)
 		{
 			return tokenValue.Replace(textToRemove, "");
+		}
+
+		private static string RunRemoveGenericReplacement(string tokenValue, string genericToRemove)
+		{
+			int genericStartPos;
+			if (string.IsNullOrEmpty(tokenValue) || (genericStartPos = tokenValue.IndexOf($"{genericToRemove}<", StringComparison.Ordinal)) < 0)
+			{
+				return tokenValue; //Generic isn't in this token
+			}
+
+			//Find appropriate closing bracket to remove
+			int genericMiddlePos = genericStartPos + genericToRemove.Length + 1;
+			int unpairedOpenArrows = 1;
+			int genericEndPos = -1;
+			for (int charInMiddle = genericMiddlePos; charInMiddle < tokenValue.Length; ++charInMiddle)
+			{
+				switch (tokenValue[charInMiddle])
+				{
+					case '<': ++unpairedOpenArrows; break;
+					case '>': --unpairedOpenArrows; break;
+				}
+				if (unpairedOpenArrows == 0)
+				{
+					genericEndPos = charInMiddle;
+					break;
+				}
+			}
+
+			if (genericEndPos == -1)
+			{
+				return tokenValue; //Unclosed Generic.  Can't remove.
+			}
+
+			var bufferWOutGeneric = new StringBuilder();
+			bufferWOutGeneric.Append(tokenValue.Substring(0, genericStartPos));
+			bufferWOutGeneric.Append(tokenValue.Substring(genericMiddlePos, genericEndPos - genericMiddlePos));
+			bufferWOutGeneric.Append(tokenValue.Substring(genericEndPos+1));
+
+			return bufferWOutGeneric.ToString();
 		}
 
 		private static string RunLowerCaseReplacement(string tokenValue)
