@@ -584,7 +584,6 @@ namespace UnitTestBoilerplate.Services
 					{
 						builder.Append("async");
 					}
-
 					break;
 
 				case "AsyncReturnType":
@@ -605,7 +604,6 @@ namespace UnitTestBoilerplate.Services
 							builder.AppendLine();
 						}
 					}
-
 					break;
 
 				case "MethodInvocationPrefix":
@@ -618,12 +616,10 @@ namespace UnitTestBoilerplate.Services
 					{
 						builder.Append("await ");
 					}
-
 					break;
 
 				case "MethodInvocation":
 					WriteMethodInvocation(builder, methodDescriptor, FindIndent(testTemplate, propertyIndex));
-
 					break;
 
 				default:
