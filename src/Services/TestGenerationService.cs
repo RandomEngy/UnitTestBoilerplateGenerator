@@ -243,7 +243,9 @@ namespace UnitTestBoilerplate.Services
 
 				var hasReturnType = !DoesReturnNonGenericTask(methodDeclaration) && !DoesReturnVoid(methodDeclaration);
 
-				methodDeclarations.Add(new MethodDescriptor(methodDeclaration.Identifier.Text, parameterTypes, isAsync, hasReturnType));
+				string returnType = methodDeclaration.ReturnType.ToFullString();
+
+				methodDeclarations.Add(new MethodDescriptor(methodDeclaration.Identifier.Text, parameterTypes, isAsync, hasReturnType, returnType));
 			}
 
 			string unitTestNamespace;
@@ -567,8 +569,12 @@ namespace UnitTestBoilerplate.Services
 			{
 				case "TestedMethodName":
 					builder.Append(methodDescriptor.Name);
-
 					break;
+
+				case "TestedMethodReturnType":
+					builder.Append(methodDescriptor.ReturnType);
+					break;
+
 				case "TestMethodName":
 					this.WriteTestMethodName(builder, context, methodDescriptor);
 					break;
