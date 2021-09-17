@@ -234,8 +234,10 @@ namespace UnitTestBoilerplate.Services
 					&& ((MethodDeclarationSyntax)n).Modifiers.Any(m => m.IsKind(SyntaxKind.PublicKeyword))))
 			{
 				var parameterList = GetParameterListNodes(methodDeclaration).ToList();
-
 				var parameterTypes = GetArgumentDescriptors(parameterList, semanticModel, mockFramework);
+
+				var attributeList = GetAttributeListNodes(methodDeclaration).ToList();
+				var httpType = GetHttpType(attributeList);
 
 				var isAsync =
 					methodDeclaration.Modifiers.Any(m => m.IsKind(SyntaxKind.AsyncKeyword)) ||
@@ -245,7 +247,7 @@ namespace UnitTestBoilerplate.Services
 
 				string returnType = methodDeclaration.ReturnType.ToFullString();
 
-				methodDeclarations.Add(new MethodDescriptor(methodDeclaration.Identifier.Text, parameterTypes, isAsync, hasReturnType, returnType));
+				methodDeclarations.Add(new MethodDescriptor(methodDeclaration.Identifier.Text, parameterTypes, isAsync, hasReturnType, returnType, httpType));
 			}
 
 			string unitTestNamespace;
@@ -356,6 +358,35 @@ namespace UnitTestBoilerplate.Services
 			SyntaxNode parameterListNode = memberNode.ChildNodes().First(n => n.Kind() == SyntaxKind.ParameterList);
 
 			return parameterListNode.ChildNodes().Where(n => n.Kind() == SyntaxKind.Parameter).Cast<ParameterSyntax>();
+		}
+
+		private static HttpType GetHttpType(List<AttributeSyntax> attributeSyntaxList)
+		{
+			HttpType http = HttpType.None;
+			foreach (AttributeSyntax attributeSyntax in attributeSyntaxList)
+			{
+				string attributeName = attributeSyntax.Name.ToString();
+				if(attributeName.StartsWith("Http"))
+				{
+					if(Enum.TryParse(attributeName.Replace("Http",""), out http))
+					{
+						break;
+					}
+					else
+					{
+						http = HttpType.None;
+					}
+				}
+			}
+
+			return http;
+		}
+
+		private static IEnumerable<AttributeSyntax> GetAttributeListNodes(SyntaxNode memberNode)
+		{
+			SyntaxNode parameterListNode = memberNode.ChildNodes().First(n => n.Kind() == SyntaxKind.AttributeList);
+
+			return parameterListNode.ChildNodes().Where(n => n.Kind() == SyntaxKind.Attribute).Cast<AttributeSyntax>();
 		}
 
 		private async Task<TestGenerationContext> CollectTestGenerationContextAsync(ProjectItemSummary selectedFile, EnvDTE.Project targetProject, TestFramework testFramework, MockFramework mockFramework, IBoilerplateSettings settings)
