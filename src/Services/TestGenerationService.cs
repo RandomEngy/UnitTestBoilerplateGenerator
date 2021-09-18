@@ -606,6 +606,10 @@ namespace UnitTestBoilerplate.Services
 					builder.Append(methodDescriptor.ReturnType);
 					break;
 
+				case "HttpType":
+					builder.Append(methodDescriptor.Http.ToString());
+					break;
+
 				case "TestMethodName":
 					this.WriteTestMethodName(builder, context, methodDescriptor);
 					break;
