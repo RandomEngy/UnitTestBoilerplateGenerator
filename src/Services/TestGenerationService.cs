@@ -671,6 +671,14 @@ namespace UnitTestBoilerplate.Services
 					WriteMethodInvocation(builder, methodDescriptor, FindIndent(testTemplate, propertyIndex));
 					break;
 
+				case "MethodParameters":
+					WriteMethodParameters(builder, methodDescriptor, FindIndent(testTemplate, propertyIndex));
+					break;
+
+				case "QueryParameters":
+					WriteQueryParameters(builder, methodDescriptor);
+					break;
+
 				default:
 					return false;
 			}
@@ -757,8 +765,10 @@ namespace UnitTestBoilerplate.Services
 
 		private static void WriteMethodParameters(StringBuilder builder, MethodDescriptor methodDescriptor, string currentIndent)
 		{
+			var httpTypes = new List<HttpType>() { HttpType.Post, HttpType.None };
+
 			int numberOfParameters = methodDescriptor.MethodParameters.Count();
-			if (numberOfParameters == 0)
+			if (numberOfParameters == 0 || !httpTypes.Contains(methodDescriptor.Http))
 			{
 				return;
 			}
@@ -785,6 +795,24 @@ namespace UnitTestBoilerplate.Services
 				{
 					builder.AppendLine(",");
 				}
+			}
+		}
+
+		private static void WriteQueryParameters(StringBuilder builder, MethodDescriptor methodDescriptor)
+		{
+			var httpTypes = new List<HttpType>() { HttpType.Post, HttpType.None };
+
+			int numberOfParameters = methodDescriptor.MethodParameters.Count();
+			if (numberOfParameters == 0 || httpTypes.Contains(methodDescriptor.Http))
+			{
+				return;
+			}
+
+			for (int j = 0; j < numberOfParameters; j++)
+			{
+				builder.Append(j==0 ? "?" : "&");
+				string argumentName = methodDescriptor.MethodParameters[j].ArgumentName;
+				builder.Append($"{argumentName}={{{argumentName}}}");
 			}
 		}
 
