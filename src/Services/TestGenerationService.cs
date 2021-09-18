@@ -17,6 +17,8 @@ namespace UnitTestBoilerplate.Services
 	[Export(typeof(ITestGenerationService))]
     public class TestGenerationService : ITestGenerationService
     {
+		#region Properties
+
 		private static readonly HashSet<string> PropertyInjectionAttributeNames = new HashSet<string>
 		{
 			"Microsoft.Practices.Unity.DependencyAttribute",
@@ -36,6 +38,10 @@ namespace UnitTestBoilerplate.Services
 
 		[Import]
 		internal IBoilerplateSettingsFactory SettingsFactory { get; set; }
+
+		#endregion Properties
+
+		#region Public Functions
 
 		public async Task<string> GenerateUnitTestFileAsync(
 			ProjectItemSummary selectedFile,
@@ -142,6 +148,10 @@ namespace UnitTestBoilerplate.Services
 
 			return relativePath;
 		}
+
+		#endregion Public Functions
+
+		#region Collect Tested Class Data
 
 		private async Task<TestGenerationContext> CollectTestGenerationContextAsync(
 			ProjectItemSummary selectedFile, 
@@ -394,6 +404,10 @@ namespace UnitTestBoilerplate.Services
 			string targetProjectNamespace = targetProject.Properties.Item("DefaultNamespace").Value as string;
 			return await this.CollectTestGenerationContextAsync(selectedFile, targetProjectNamespace, testFramework, mockFramework, settings);
 		}
+
+		#endregion Collect Tested Class Data
+
+		#region Generate Test Class
 
 		private string GenerateUnitTestContents(TestGenerationContext context)
 		{
@@ -1125,5 +1139,7 @@ namespace UnitTestBoilerplate.Services
 				}
 			}
 		}
+
+		#endregion Generate Test Class
 	}
 }
