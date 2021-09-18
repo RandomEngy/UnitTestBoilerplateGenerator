@@ -736,42 +736,40 @@ namespace UnitTestBoilerplate.Services
 
 		private static void WriteMethodInvocation(StringBuilder builder, MethodDescriptor methodDescriptor, string currentIndent)
 		{
-			int numberOfParameters = methodDescriptor.MethodParameters.Count();
 			builder.Append($".{methodDescriptor.Name}(");
+			WriteMethodParameters(builder, methodDescriptor, currentIndent);
+			builder.Append(")");
+		}
 
+		private static void WriteMethodParameters(StringBuilder builder, MethodDescriptor methodDescriptor, string currentIndent)
+		{
+			int numberOfParameters = methodDescriptor.MethodParameters.Count();
 			if (numberOfParameters == 0)
 			{
-				builder.Append(")");
+				return;
 			}
-			else
+
+			builder.AppendLine();
+
+			for (int j = 0; j < numberOfParameters; j++)
 			{
-				builder.AppendLine();
+				builder.Append($"{currentIndent}	");
 
-				for (int j = 0; j < numberOfParameters; j++)
+				switch (methodDescriptor.MethodParameters[j].Modifier)
 				{
-					builder.Append($"{currentIndent}	");
+					case ParameterModifier.Out:
+						builder.Append("out ");
+						break;
+					case ParameterModifier.Ref:
+						builder.Append("ref ");
+						break;
+				}
 
-					switch (methodDescriptor.MethodParameters[j].Modifier)
-					{
-						case ParameterModifier.Out:
-							builder.Append("out ");
-							break;
-						case ParameterModifier.Ref:
-							builder.Append("ref ");
-							break;
-						default:
-							break;
-					}
-					builder.Append($"{methodDescriptor.MethodParameters[j].ArgumentName}");
+				builder.Append($"{methodDescriptor.MethodParameters[j].ArgumentName}");
 
-					if (j < numberOfParameters - 1)
-					{
-						builder.AppendLine(",");
-					}
-					else
-					{
-						builder.Append(")");
-					}
+				if (j < numberOfParameters - 1)
+				{
+					builder.AppendLine(",");
 				}
 			}
 		}
