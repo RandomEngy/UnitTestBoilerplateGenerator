@@ -384,9 +384,9 @@ namespace UnitTestBoilerplate.Services
 
 		private static IEnumerable<AttributeSyntax> GetAttributeListNodes(SyntaxNode memberNode)
 		{
-			SyntaxNode parameterListNode = memberNode.ChildNodes().First(n => n.Kind() == SyntaxKind.AttributeList);
+			SyntaxNode parameterListNode = memberNode.ChildNodes().FirstOrDefault(n => n.Kind() == SyntaxKind.AttributeList);
 
-			return parameterListNode.ChildNodes().Where(n => n.Kind() == SyntaxKind.Attribute).Cast<AttributeSyntax>();
+			return parameterListNode == null ? new List<AttributeSyntax>() : parameterListNode?.ChildNodes().Where(n => n.Kind() == SyntaxKind.Attribute).Cast<AttributeSyntax>();
 		}
 
 		private async Task<TestGenerationContext> CollectTestGenerationContextAsync(ProjectItemSummary selectedFile, EnvDTE.Project targetProject, TestFramework testFramework, MockFramework mockFramework, IBoilerplateSettings settings)
