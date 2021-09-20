@@ -675,8 +675,8 @@ namespace UnitTestBoilerplate.Services
 					WriteMethodParameters(builder, methodDescriptor, FindIndent(testTemplate, propertyIndex));
 					break;
 
-				case "QueryParameters":
-					WriteQueryParameters(builder, methodDescriptor);
+				case "URIParameters":
+					WriteURIParameters(builder, methodDescriptor);
 					break;
 
 				default:
@@ -798,7 +798,7 @@ namespace UnitTestBoilerplate.Services
 			}
 		}
 
-		private static void WriteQueryParameters(StringBuilder builder, MethodDescriptor methodDescriptor)
+		private static void WriteURIParameters(StringBuilder builder, MethodDescriptor methodDescriptor)
 		{
 			var httpTypes = new List<HttpType>() { HttpType.Post, HttpType.None };
 
