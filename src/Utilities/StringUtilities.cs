@@ -95,6 +95,15 @@ namespace UnitTestBoilerplate.Utilities
 				case "LowerCase":
 					tokenValue = RunLowerCaseReplacement(tokenValue);
 					break;
+				case "AddOnParms":
+					tokenValue = RunAddOnParmsReplacement(tokenValue);
+					break;
+				case "SingleLine":
+					tokenValue = RunSingleLineReplacement(tokenValue);
+					break;
+				case "StdHttpFuncName":
+					tokenValue = RunStdHttpFuncNameReplacement(tokenValue);
+					break;
 				default:
 					// Ignore the modifier
 					break;
@@ -202,6 +211,33 @@ namespace UnitTestBoilerplate.Utilities
 		private static string RunLowerCaseReplacement(string tokenValue)
 		{
 			tokenValue = tokenValue.ToLower();
+			return tokenValue;
+		}
+
+		private static string RunAddOnParmsReplacement(string tokenValue)
+		{
+			if (!string.IsNullOrEmpty(tokenValue))
+			{
+				return $",{tokenValue}";
+			}
+
+			return tokenValue;
+		}
+
+		private static string RunSingleLineReplacement(string tokenValue)
+		{
+			return tokenValue.Replace(Environment.NewLine, "");
+		}
+
+		private static string RunStdHttpFuncNameReplacement(string tokenValue)
+		{
+			switch (tokenValue)
+			{
+				case "Get":
+					return "GetAsync";
+				case "Post":
+					return "PostAsJsonAsync";
+			}
 			return tokenValue;
 		}
 
