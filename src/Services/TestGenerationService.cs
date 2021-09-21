@@ -675,6 +675,10 @@ namespace UnitTestBoilerplate.Services
 					WriteMethodParameters(builder, methodDescriptor, FindIndent(testTemplate, propertyIndex));
 					break;
 
+				case "HttpMethodParameters":
+					WriteHttpMethodParameters(builder, methodDescriptor, FindIndent(testTemplate, propertyIndex));
+					break;
+
 				case "URIParameters":
 					WriteURIParameters(builder, methodDescriptor);
 					break;
@@ -765,7 +769,7 @@ namespace UnitTestBoilerplate.Services
 
 		private static void WriteMethodParameters(StringBuilder builder, MethodDescriptor methodDescriptor, string currentIndent)
 		{
-			var httpTypes = new List<HttpType>() { HttpType.Post, HttpType.None };
+			var httpTypes = new List<HttpType>() { HttpType.None };
 
 			int numberOfParameters = methodDescriptor.MethodParameters.Count();
 			if (numberOfParameters == 0 || !httpTypes.Contains(methodDescriptor.Http))
@@ -798,12 +802,26 @@ namespace UnitTestBoilerplate.Services
 			}
 		}
 
-		private static void WriteURIParameters(StringBuilder builder, MethodDescriptor methodDescriptor)
+		private static void WriteHttpMethodParameters(StringBuilder builder, MethodDescriptor methodDescriptor, string currentIndent)
 		{
-			var httpTypes = new List<HttpType>() { HttpType.Post, HttpType.None };
+			var httpTypes = new List<HttpType>() { HttpType.Post };
 
 			int numberOfParameters = methodDescriptor.MethodParameters.Count();
-			if (numberOfParameters == 0 || httpTypes.Contains(methodDescriptor.Http))
+			if (numberOfParameters == 0 || !httpTypes.Contains(methodDescriptor.Http))
+			{
+				return;
+			}
+
+			builder.AppendLine();
+			builder.AppendLine($"{currentIndent}	{methodDescriptor.MethodParameters[0].ArgumentName}");
+		}
+
+		private static void WriteURIParameters(StringBuilder builder, MethodDescriptor methodDescriptor)
+		{
+			var httpTypes = new List<HttpType>() { HttpType.None };
+
+			int numberOfParameters = methodDescriptor.MethodParameters.Count();
+			if (numberOfParameters == 0 || httpTypes.Contains(methodDescriptor.Http) || (methodDescriptor.Http == HttpType.Post && numberOfParameters == 1))
 			{
 				return;
 			}
