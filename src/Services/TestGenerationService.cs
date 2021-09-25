@@ -15,8 +15,8 @@ using UnitTestBoilerplate.Utilities;
 namespace UnitTestBoilerplate.Services
 {
 	[Export(typeof(ITestGenerationService))]
-    public class TestGenerationService : ITestGenerationService
-    {
+	public class TestGenerationService : ITestGenerationService
+	{
 		private static readonly HashSet<string> PropertyInjectionAttributeNames = new HashSet<string>
 		{
 			"Microsoft.Practices.Unity.DependencyAttribute",
@@ -39,7 +39,7 @@ namespace UnitTestBoilerplate.Services
 
 		public async Task<string> GenerateUnitTestFileAsync(
 			ProjectItemSummary selectedFile,
-			EnvDTE.Project targetProject, 
+			EnvDTE.Project targetProject,
 			TestFramework testFramework,
 			MockFramework mockFramework)
 		{
@@ -144,8 +144,8 @@ namespace UnitTestBoilerplate.Services
 		}
 
 		private async Task<TestGenerationContext> CollectTestGenerationContextAsync(
-			ProjectItemSummary selectedFile, 
-			string targetProjectNamespace, 
+			ProjectItemSummary selectedFile,
+			string targetProjectNamespace,
 			TestFramework testFramework,
 			MockFramework mockFramework,
 			IBoilerplateSettings settings)
@@ -162,26 +162,30 @@ namespace UnitTestBoilerplate.Services
 			SyntaxNode root = await document.GetSyntaxRootAsync();
 			SemanticModel semanticModel = await document.GetSemanticModelAsync();
 
-			SyntaxNode firstClassDeclaration = root.DescendantNodes().FirstOrDefault(node => node.Kind() == SyntaxKind.ClassDeclaration || node.Kind() == SyntaxKind.StructDeclaration);
-
-			if (firstClassDeclaration == null)
+			SyntaxNode firstClassLikeDeclaration = root.DescendantNodes().FirstOrDefault(node =>
 			{
-				throw new InvalidOperationException("Could not find class or struct declaration.");
+				var kind = node.Kind();
+				return kind == SyntaxKind.ClassDeclaration || kind == SyntaxKind.StructDeclaration || kind == SyntaxKind.RecordDeclaration;
+			});
+
+			if (firstClassLikeDeclaration == null)
+			{
+				throw new InvalidOperationException("Could not find class, struct or record declaration.");
 			}
 
-			if (firstClassDeclaration.ChildTokens().Any(node => node.Kind() == SyntaxKind.AbstractKeyword))
+			if (firstClassLikeDeclaration.ChildTokens().Any(node => node.Kind() == SyntaxKind.AbstractKeyword))
 			{
 				throw new InvalidOperationException("Cannot unit test an abstract class.");
 			}
 
-			SyntaxToken classIdentifierToken = firstClassDeclaration.ChildTokens().FirstOrDefault(n => n.Kind() == SyntaxKind.IdentifierToken);
+			SyntaxToken classIdentifierToken = firstClassLikeDeclaration.ChildTokens().FirstOrDefault(n => n.Kind() == SyntaxKind.IdentifierToken);
 			if (classIdentifierToken == default(SyntaxToken))
 			{
 				throw new InvalidOperationException("Could not find class identifier.");
 			}
 
 			NamespaceDeclarationSyntax namespaceDeclarationSyntax = null;
-			if (!TypeUtilities.TryGetParentSyntax(firstClassDeclaration, out namespaceDeclarationSyntax))
+			if (!TypeUtilities.TryGetParentSyntax(firstClassLikeDeclaration, out namespaceDeclarationSyntax))
 			{
 				throw new InvalidOperationException("Could not find class namespace.");
 			}
@@ -217,7 +221,7 @@ namespace UnitTestBoilerplate.Services
 			// Find constructor injection types
 			List<InjectableType> constructorInjectionTypes = new List<InjectableType>();
 
-			SyntaxNode constructorDeclaration = firstClassDeclaration.ChildNodes().FirstOrDefault(n => n.Kind() == SyntaxKind.ConstructorDeclaration);
+			SyntaxNode constructorDeclaration = firstClassLikeDeclaration.ChildNodes().FirstOrDefault(n => n.Kind() == SyntaxKind.ConstructorDeclaration);
 
 			if (constructorDeclaration != null)
 			{
@@ -229,7 +233,7 @@ namespace UnitTestBoilerplate.Services
 			// Find public method declarations
 			IList<MethodDescriptor> methodDeclarations = new List<MethodDescriptor>();
 			foreach (MethodDeclarationSyntax methodDeclaration in
-				firstClassDeclaration.ChildNodes().Where(
+				firstClassLikeDeclaration.ChildNodes().Where(
 					n => n.Kind() == SyntaxKind.MethodDeclaration
 					&& ((MethodDeclarationSyntax)n).Modifiers.Any(m => m.IsKind(SyntaxKind.PublicKeyword))))
 			{
