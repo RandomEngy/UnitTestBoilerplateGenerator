@@ -8,16 +8,12 @@ namespace UnitTestBoilerplate.SelfTest.Cases
 	[TestClass]
 	public class MixedInjectedClassMultipleTests
 	{
-		private IInterface3 subInterface3;
-		private IInterface4 subInterface4;
 		private ISomeInterface subSomeInterface;
 		private ISomeOtherInterface subSomeOtherInterface;
 
 		[TestInitialize]
 		public void TestInitialize()
 		{
-			this.subInterface3 = Substitute.For<IInterface3>();
-			this.subInterface4 = Substitute.For<IInterface4>();
 			this.subSomeInterface = Substitute.For<ISomeInterface>();
 			this.subSomeOtherInterface = Substitute.For<ISomeOtherInterface>();
 		}
@@ -26,11 +22,7 @@ namespace UnitTestBoilerplate.SelfTest.Cases
 		{
 			return new MixedInjectedClassMultiple(
 				this.subSomeInterface,
-				this.subSomeOtherInterface)
-			{
-				Interface3Property = this.subInterface3,
-				Interface4Property = this.subInterface4,
-			};
+				this.subSomeOtherInterface);
 		}
 
 		[TestMethod]

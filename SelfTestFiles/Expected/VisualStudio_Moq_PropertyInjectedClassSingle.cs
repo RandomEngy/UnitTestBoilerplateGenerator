@@ -1,6 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using UnitBoilerplate.Sandbox.Classes;
 using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
@@ -10,22 +9,19 @@ namespace UnitTestBoilerplate.SelfTest.Cases
 	{
 		private MockRepository mockRepository;
 
-		private Mock<ISomeInterface> mockSomeInterface;
+
 
 		[TestInitialize]
 		public void TestInitialize()
 		{
 			this.mockRepository = new MockRepository(MockBehavior.Strict);
 
-			this.mockSomeInterface = this.mockRepository.Create<ISomeInterface>();
+
 		}
 
 		private PropertyInjectedClassSingle CreatePropertyInjectedClassSingle()
 		{
-			return new PropertyInjectedClassSingle
-			{
-				MyProperty = this.mockSomeInterface.Object,
-			};
+			return new PropertyInjectedClassSingle();
 		}
 
 		[TestMethod]

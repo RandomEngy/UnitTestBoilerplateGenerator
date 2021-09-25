@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MSTest.TestFramework" Version="2.2.7" />
-    <PackageReference Include="NSubstitute" Version="4.2.2" />
+    <PackageReference Include="RhinoMocks" Version="3.6.1" />
   </ItemGroup>
 
   <ItemGroup>

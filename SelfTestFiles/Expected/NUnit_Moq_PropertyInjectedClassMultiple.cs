@@ -1,6 +1,5 @@
 using Moq;
 using NUnit.Framework;
-using UnitBoilerplate.Sandbox.Classes;
 using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
@@ -10,25 +9,19 @@ namespace UnitTestBoilerplate.SelfTest.Cases
 	{
 		private MockRepository mockRepository;
 
-		private Mock<ISomeInterface> mockSomeInterface;
-		private Mock<ISomeOtherInterface> mockSomeOtherInterface;
+
 
 		[SetUp]
 		public void SetUp()
 		{
 			this.mockRepository = new MockRepository(MockBehavior.Strict);
 
-			this.mockSomeInterface = this.mockRepository.Create<ISomeInterface>();
-			this.mockSomeOtherInterface = this.mockRepository.Create<ISomeOtherInterface>();
+
 		}
 
 		private PropertyInjectedClassMultiple CreatePropertyInjectedClassMultiple()
 		{
-			return new PropertyInjectedClassMultiple
-			{
-				MyProperty = this.mockSomeInterface.Object,
-				Property2 = this.mockSomeOtherInterface.Object,
-			};
+			return new PropertyInjectedClassMultiple();
 		}
 
 		[Test]
