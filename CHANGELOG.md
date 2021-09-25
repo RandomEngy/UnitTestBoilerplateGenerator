@@ -4,6 +4,14 @@
 
 # Changelog
 
+## 2.5.7
+**2021-09-24**
+- Added support for generating test files for C# 9 `record`s.
+
+## 2.5.6
+**2021-09-12**
+- Updated to work on Visual Studio 2022. Dropped support for Visual Studio 2015.
+
 ## 2.5.0
 **2020-08-20**
 - Added support for Telerik JustMock framework.
