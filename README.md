@@ -1,6 +1,9 @@
 # Unit Test Boilerplate Generator
 
 [![Build status](https://ci.appveyor.com/api/projects/status/7ecfxkoe7sj4nw5h?svg=true)](https://ci.appveyor.com/project/RandomEngy/unittestboilerplategenerator)
+[![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/RandomEngy.UnitTestBoilerplateGenerator)](https://marketplace.visualstudio.com/items?itemName=RandomEngy.UnitTestBoilerplateGenerator)
+[![Visual Studio Marketplace Rating](https://img.shields.io/visual-studio-marketplace/r/RandomEngy.UnitTestBoilerplateGenerator)](https://marketplace.visualstudio.com/items?itemName=RandomEngy.UnitTestBoilerplateGenerator)
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/RandomEngy.UnitTestBoilerplateGenerator)](https://marketplace.visualstudio.com/items?itemName=RandomEngy.UnitTestBoilerplateGenerator)
 
 Download this extension from the [VS Marketplace](https://marketplace.visualstudio.com/items?itemName=RandomEngy.UnitTestBoilerplateGenerator)
 or get the [CI build](http://vsixgallery.com/extension/UnitTestBoilerplate.RandomEngy.ca0bb824-eb5a-41a8-ab39-3b81f03ba3fe/).
@@ -43,7 +46,7 @@ Each mocking framework has its own pattern.
 
 ![Options Screenshot](OptionsScreenshot.png)
 
-[Supported format tokens documentation](https://github.com/Microsoft/UnitTestBoilerplateGenerator/wiki/Custom-Format-Tokens)
+[Supported format tokens documentation](https://github.com/RandomEngy/UnitTestBoilerplateGenerator/wiki/Custom-Format-Tokens)
 
 * Supports mocking generic interfaces
 * Automatically brings in appropriate using statements
