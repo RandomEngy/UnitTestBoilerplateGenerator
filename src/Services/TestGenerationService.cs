@@ -165,7 +165,7 @@ namespace UnitTestBoilerplate.Services
 			SyntaxNode firstClassLikeDeclaration = root.DescendantNodes().FirstOrDefault(node =>
 			{
 				var kind = node.Kind();
-				return kind == SyntaxKind.ClassDeclaration || kind == SyntaxKind.StructDeclaration || kind == SyntaxKind.RecordDeclaration;
+				return kind == SyntaxKind.ClassDeclaration || kind == SyntaxKind.StructDeclaration || kind == (SyntaxKind)9063; // record - Cannot update CodeAnalysis library because it's not found in VS 2019
 			});
 
 			if (firstClassLikeDeclaration == null)
