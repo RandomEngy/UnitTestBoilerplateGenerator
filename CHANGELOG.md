@@ -4,6 +4,10 @@
 
 # Changelog
 
+## 2.5.8
+**2021-10-01**
+- Fixed crash on Visual Studio 2019 from missing DLL.
+
 ## 2.5.7
 **2021-09-24**
 - Added support for generating test files for C# 9 `record`s.
