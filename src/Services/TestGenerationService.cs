@@ -184,8 +184,12 @@ namespace UnitTestBoilerplate.Services
 				throw new InvalidOperationException("Could not find class identifier.");
 			}
 
-			NamespaceDeclarationSyntax namespaceDeclarationSyntax = null;
-			if (!TypeUtilities.TryGetParentSyntax(firstClassLikeDeclaration, out namespaceDeclarationSyntax))
+			object namespaceDeclarationSyntax = null;
+			// 8842 is NamespaceDeclaration
+			// 8845 is FileScopedNamespaceDeclaration
+			// We would normally look for a node descended from BaseNamespaceDeclarationSyntax, but we don't have that type defined in the v1 Microsoft.CodeAnalysis DLL.
+			// We can fix this once we are building against a higher version and can drop support for VS 2019.
+			if (!TypeUtilities.TryGetParentSyntax(firstClassLikeDeclaration, (syntaxNode) => { return syntaxNode.RawKind == 8842 || syntaxNode.RawKind == 8845; }, out namespaceDeclarationSyntax))
 			{
 				throw new InvalidOperationException("Could not find class namespace.");
 			}
@@ -193,7 +197,10 @@ namespace UnitTestBoilerplate.Services
 			// Find property injection types
 			var injectableProperties = new List<InjectableProperty>();
 
-			string classFullName = namespaceDeclarationSyntax.Name + "." + classIdentifierToken;
+			// We need to get the name via reflection since the DLL we are building against does not have the BaseNamespaceDeclarationSyntax or FileScopedNamespaceDeclarationSyntax types.
+			string qualifiedNamespaceString = namespaceDeclarationSyntax.GetType().GetProperty("Name").GetValue(namespaceDeclarationSyntax, null).ToString();
+
+			string classFullName = qualifiedNamespaceString + "." + classIdentifierToken;
 			INamedTypeSymbol classType = semanticModel.Compilation.GetTypeByMetadataName(classFullName);
 
 			foreach (ISymbol member in classType.GetBaseTypesAndThis().SelectMany(n => n.GetMembers()))
@@ -279,7 +286,7 @@ namespace UnitTestBoilerplate.Services
 				settings,
 				unitTestNamespace,
 				className,
-				namespaceDeclarationSyntax.Name.ToString(),
+				qualifiedNamespaceString,
 				injectableProperties,
 				constructorInjectionTypes,
 				injectedTypes,
