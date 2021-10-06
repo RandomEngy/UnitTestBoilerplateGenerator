@@ -21,7 +21,7 @@ namespace UnitTestBoilerplate.View
 	/// <summary>
 	/// Interaction logic for SelfTestDialog.xaml
 	/// </summary>
-	public partial class SelfTestDialog : DialogWindow
+	public partial class SelfTestDialog : BaseDialogWindow
 	{
 		public SelfTestDialog()
 		{

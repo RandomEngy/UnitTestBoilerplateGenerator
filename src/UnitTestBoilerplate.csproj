@@ -242,6 +242,7 @@
     <Compile Include="ViewModel\CustomMockViewModel.cs" />
     <Compile Include="ViewModel\OtherOptionsDialogViewModel.cs" />
     <Compile Include="ViewModel\WorkspaceSettingsDialogViewModel.cs" />
+    <Compile Include="View\BaseDialogWindow.cs" />
     <Compile Include="View\CreateUnitTestBoilerplateDialog.xaml.cs">
       <DependentUpon>CreateUnitTestBoilerplateDialog.xaml</DependentUpon>
     </Compile>
