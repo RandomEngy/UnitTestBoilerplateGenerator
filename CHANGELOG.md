@@ -4,7 +4,7 @@
 
 # Changelog
 
-## 2.6.0
+## 2.6.1
 **2021-10-07**
 - Fixed issue with file-scoped namespaces (C# 10 feature). It's also possible to update the template to produce tests with file-scoped namespaces, as long as the test project supports C# 10.
 - Fixed possible issue with older VS versions by updating to Microsoft.VisualStudio.SDK NuGet package.
