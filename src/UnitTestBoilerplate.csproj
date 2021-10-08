@@ -96,9 +96,6 @@
     </PackageReference>
     <PackageReference Include="MvvmLightLibs" Version="5.4.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="System.Collections" Version="4.3.0" />
-    <PackageReference Include="System.Collections.Concurrent" Version="4.3.0" />
-    <PackageReference Include="System.Collections.Immutable" Version="5.0.0" />
     <PackageReference Include="System.Xml.XDocument" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -238,11 +235,8 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
