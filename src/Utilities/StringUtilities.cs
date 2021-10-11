@@ -95,8 +95,8 @@ namespace UnitTestBoilerplate.Utilities
 				case "LowerCase":
 					tokenValue = RunLowerCaseReplacement(tokenValue);
 					break;
-				case "AddOnParms":
-					tokenValue = RunAddOnParmsReplacement(tokenValue);
+				case "AddOnParams":
+					tokenValue = RunAddOnParamsReplacement(tokenValue);
 					break;
 				case "SingleLine":
 					tokenValue = RunSingleLineReplacement(tokenValue);
@@ -214,7 +214,7 @@ namespace UnitTestBoilerplate.Utilities
 			return tokenValue;
 		}
 
-		private static string RunAddOnParmsReplacement(string tokenValue)
+		private static string RunAddOnParamsReplacement(string tokenValue)
 		{
 			if (!string.IsNullOrEmpty(tokenValue))
 			{
