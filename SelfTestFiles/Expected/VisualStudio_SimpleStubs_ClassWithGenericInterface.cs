@@ -7,13 +7,11 @@ namespace UnitTestBoilerplate.SelfTest.Cases
 	[TestClass]
 	public class ClassWithGenericInterfaceTests
 	{
-		private StubIInterface3 stubInterface3;
 		private StubISomeInterface stubSomeInterface;
 
 		[TestInitialize]
 		public void TestInitialize()
 		{
-			this.stubInterface3 = new StubIInterface3();
 			this.stubSomeInterface = new StubISomeInterface();
 		}
 
@@ -22,10 +20,7 @@ namespace UnitTestBoilerplate.SelfTest.Cases
 			return new ClassWithGenericInterface(
 				TODO,
 				TODO,
-				this.stubSomeInterface)
-			{
-				Interface2 = this.stubInterface3,
-			};
+				this.stubSomeInterface);
 		}
 
 		[TestMethod]

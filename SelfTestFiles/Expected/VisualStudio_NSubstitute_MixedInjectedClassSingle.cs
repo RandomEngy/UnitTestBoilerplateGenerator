@@ -8,23 +8,18 @@ namespace UnitTestBoilerplate.SelfTest.Cases
 	[TestClass]
 	public class MixedInjectedClassSingleTests
 	{
-		private IInterface3 subInterface3;
 		private ISomeInterface subSomeInterface;
 
 		[TestInitialize]
 		public void TestInitialize()
 		{
-			this.subInterface3 = Substitute.For<IInterface3>();
 			this.subSomeInterface = Substitute.For<ISomeInterface>();
 		}
 
 		private MixedInjectedClassSingle CreateMixedInjectedClassSingle()
 		{
 			return new MixedInjectedClassSingle(
-				this.subSomeInterface)
-			{
-				Interface3Property = this.subInterface3,
-			};
+				this.subSomeInterface);
 		}
 
 		[TestMethod]

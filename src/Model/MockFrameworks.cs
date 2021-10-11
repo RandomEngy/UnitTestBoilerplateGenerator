@@ -71,7 +71,7 @@ namespace UnitTestBoilerplate.Model
 					assertStatement: null),
 				new MockFramework(
 					name: SimpleStubsName,
-					detectionReferenceMatches: new List<string> { "Etg.SimpleStubs" },
+					detectionReferenceMatches: new List<string> { "Etg.SimpleStubs", "SimpleStubs" },
 					detectionRank: 2,
 					usingNamespaces: new List<string>(),
 					supportsGenerics: false,

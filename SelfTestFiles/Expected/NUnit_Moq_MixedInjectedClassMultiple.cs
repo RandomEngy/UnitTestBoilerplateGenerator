@@ -10,8 +10,6 @@ namespace UnitTestBoilerplate.SelfTest.Cases
 	{
 		private MockRepository mockRepository;
 
-		private Mock<IInterface3> mockInterface3;
-		private Mock<IInterface4> mockInterface4;
 		private Mock<ISomeInterface> mockSomeInterface;
 		private Mock<ISomeOtherInterface> mockSomeOtherInterface;
 
@@ -20,8 +18,6 @@ namespace UnitTestBoilerplate.SelfTest.Cases
 		{
 			this.mockRepository = new MockRepository(MockBehavior.Strict);
 
-			this.mockInterface3 = this.mockRepository.Create<IInterface3>();
-			this.mockInterface4 = this.mockRepository.Create<IInterface4>();
 			this.mockSomeInterface = this.mockRepository.Create<ISomeInterface>();
 			this.mockSomeOtherInterface = this.mockRepository.Create<ISomeOtherInterface>();
 		}
@@ -30,11 +26,7 @@ namespace UnitTestBoilerplate.SelfTest.Cases
 		{
 			return new MixedInjectedClassMultiple(
 				this.mockSomeInterface.Object,
-				this.mockSomeOtherInterface.Object)
-			{
-				Interface3Property = this.mockInterface3.Object,
-				Interface4Property = this.mockInterface4.Object,
-			};
+				this.mockSomeOtherInterface.Object);
 		}
 
 		[Test]

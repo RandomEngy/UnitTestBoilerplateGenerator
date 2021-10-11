@@ -11,9 +11,6 @@ namespace UnitTestBoilerplate.SelfTest.Cases
 	{
 		private MockRepository mockRepository;
 
-		private Mock<IInterface3> mockInterface3;
-		private Mock<IGenericInterface<List<int>>> mockGenericInterfaceListInt;
-		private Mock<IGenericInterface<List<ISomeOtherInterface>>> mockGenericInterfaceListSomeOtherInterface;
 		private Mock<IGenericInterface<bool>> mockGenericInterfaceBool;
 		private Mock<IGenericInterface<List<string>>> mockGenericInterfaceListString;
 		private Mock<ISomeInterface> mockSomeInterface;
@@ -23,9 +20,6 @@ namespace UnitTestBoilerplate.SelfTest.Cases
 		{
 			this.mockRepository = new MockRepository(MockBehavior.Strict);
 
-			this.mockInterface3 = this.mockRepository.Create<IInterface3>();
-			this.mockGenericInterfaceListInt = this.mockRepository.Create<IGenericInterface<List<int>>>();
-			this.mockGenericInterfaceListSomeOtherInterface = this.mockRepository.Create<IGenericInterface<List<ISomeOtherInterface>>>();
 			this.mockGenericInterfaceBool = this.mockRepository.Create<IGenericInterface<bool>>();
 			this.mockGenericInterfaceListString = this.mockRepository.Create<IGenericInterface<List<string>>>();
 			this.mockSomeInterface = this.mockRepository.Create<ISomeInterface>();
@@ -36,12 +30,7 @@ namespace UnitTestBoilerplate.SelfTest.Cases
 			return new ClassWithGenericInterface(
 				this.mockGenericInterfaceBool.Object,
 				this.mockGenericInterfaceListString.Object,
-				this.mockSomeInterface.Object)
-			{
-				Interface2 = this.mockInterface3.Object,
-				GenericInterface3 = this.mockGenericInterfaceListInt.Object,
-				GenericInterface4 = this.mockGenericInterfaceListSomeOtherInterface.Object,
-			};
+				this.mockSomeInterface.Object);
 		}
 
 		[Test]

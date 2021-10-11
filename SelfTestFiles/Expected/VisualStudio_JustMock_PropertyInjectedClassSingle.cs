@@ -1,6 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.JustMock;
-using UnitBoilerplate.Sandbox.Classes;
 using UnitBoilerplate.Sandbox.Classes.Cases;
 
 namespace UnitTestBoilerplate.SelfTest.Cases
@@ -8,20 +7,17 @@ namespace UnitTestBoilerplate.SelfTest.Cases
 	[TestClass]
 	public class PropertyInjectedClassSingleTests
 	{
-		private ISomeInterface mockSomeInterface;
+
 
 		[TestInitialize]
 		public void TestInitialize()
 		{
-			this.mockSomeInterface = Mock.Create<ISomeInterface>();
+
 		}
 
 		private PropertyInjectedClassSingle CreatePropertyInjectedClassSingle()
 		{
-			return new PropertyInjectedClassSingle
-			{
-				MyProperty = this.mockSomeInterface,
-			};
+			return new PropertyInjectedClassSingle();
 		}
 
 		[TestMethod]

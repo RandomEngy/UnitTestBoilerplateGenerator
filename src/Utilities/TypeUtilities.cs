@@ -50,6 +50,38 @@ namespace UnitTestBoilerplate.Utilities
 			       typeName[1] <= 'Z';
 		}
 
+		public static bool TryGetParentSyntax(SyntaxNode syntaxNode, Func<SyntaxNode, bool> evalFunc, out object result)
+		{
+			result = null;
+
+			if (syntaxNode == null)
+			{
+				return false;
+			}
+
+			try
+			{
+				syntaxNode = syntaxNode.Parent;
+
+				if (syntaxNode == null)
+				{
+					return false;
+				}
+
+				if (evalFunc(syntaxNode))
+				{
+					result = syntaxNode;
+					return true;
+				}
+
+				return TryGetParentSyntax(syntaxNode, evalFunc, out result);
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
 		public static bool TryGetParentSyntax<T>(SyntaxNode syntaxNode, out T result)
 			where T : SyntaxNode
 		{
@@ -69,7 +101,7 @@ namespace UnitTestBoilerplate.Utilities
 					return false;
 				}
 
-				if (syntaxNode.GetType() == typeof(T))
+				if (typeof(T).IsAssignableFrom(syntaxNode.GetType()))
 				{
 					result = syntaxNode as T;
 					return true;

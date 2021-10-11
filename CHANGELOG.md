@@ -4,6 +4,23 @@
 
 # Changelog
 
+## 2.6.1
+**2021-10-07**
+- Fixed issue with file-scoped namespaces (C# 10 feature). It's also possible to update the template to produce tests with file-scoped namespaces, as long as the test project supports C# 10.
+- Fixed possible issue with older VS versions by updating to Microsoft.VisualStudio.SDK NuGet package.
+
+## 2.5.8
+**2021-10-01**
+- Fixed crash on Visual Studio 2019 from missing DLL.
+
+## 2.5.7
+**2021-09-24**
+- Added support for generating test files for C# 9 `record`s.
+
+## 2.5.6
+**2021-09-12**
+- Updated to work on Visual Studio 2022. Dropped support for Visual Studio 2015.
+
 ## 2.5.0
 **2020-08-20**
 - Added support for Telerik JustMock framework.

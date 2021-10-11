@@ -9,7 +9,7 @@ namespace UnitTestBoilerplate.View
     /// <summary>
     /// Interaction logic for CreateUnitTestBoilerplateWindow.xaml
     /// </summary>
-    public partial class CreateUnitTestBoilerplateDialog : DialogWindow, ICreateUnitTestBoilerplateView
+    public partial class CreateUnitTestBoilerplateDialog : BaseDialogWindow, ICreateUnitTestBoilerplateView
     {
         public CreateUnitTestBoilerplateDialog()
         {

@@ -9,9 +9,6 @@ namespace UnitTestBoilerplate.SelfTest.Cases
 	[TestFixture]
 	public class ClassWithGenericInterfaceTests
 	{
-		private IInterface3 subInterface3;
-		private IGenericInterface<List<int>> subGenericInterfaceListInt;
-		private IGenericInterface<List<ISomeOtherInterface>> subGenericInterfaceListSomeOtherInterface;
 		private IGenericInterface<bool> subGenericInterfaceBool;
 		private IGenericInterface<List<string>> subGenericInterfaceListString;
 		private ISomeInterface subSomeInterface;
@@ -19,9 +16,6 @@ namespace UnitTestBoilerplate.SelfTest.Cases
 		[SetUp]
 		public void SetUp()
 		{
-			this.subInterface3 = Substitute.For<IInterface3>();
-			this.subGenericInterfaceListInt = Substitute.For<IGenericInterface<List<int>>>();
-			this.subGenericInterfaceListSomeOtherInterface = Substitute.For<IGenericInterface<List<ISomeOtherInterface>>>();
 			this.subGenericInterfaceBool = Substitute.For<IGenericInterface<bool>>();
 			this.subGenericInterfaceListString = Substitute.For<IGenericInterface<List<string>>>();
 			this.subSomeInterface = Substitute.For<ISomeInterface>();
@@ -32,12 +26,7 @@ namespace UnitTestBoilerplate.SelfTest.Cases
 			return new ClassWithGenericInterface(
 				this.subGenericInterfaceBool,
 				this.subGenericInterfaceListString,
-				this.subSomeInterface)
-			{
-				Interface2 = this.subInterface3,
-				GenericInterface3 = this.subGenericInterfaceListInt,
-				GenericInterface4 = this.subGenericInterfaceListSomeOtherInterface,
-			};
+				this.subSomeInterface);
 		}
 
 		[Test]

@@ -45,7 +45,7 @@ namespace UnitTestBoilerplate.Services
 
 		public async Task<string> GenerateUnitTestFileAsync(
 			ProjectItemSummary selectedFile,
-			EnvDTE.Project targetProject, 
+			EnvDTE.Project targetProject,
 			TestFramework testFramework,
 			MockFramework mockFramework)
 		{
@@ -154,8 +154,8 @@ namespace UnitTestBoilerplate.Services
 		#region Collect Tested Class Data
 
 		private async Task<TestGenerationContext> CollectTestGenerationContextAsync(
-			ProjectItemSummary selectedFile, 
-			string targetProjectNamespace, 
+			ProjectItemSummary selectedFile,
+			string targetProjectNamespace,
 			TestFramework testFramework,
 			MockFramework mockFramework,
 			IBoilerplateSettings settings)
@@ -172,26 +172,34 @@ namespace UnitTestBoilerplate.Services
 			SyntaxNode root = await document.GetSyntaxRootAsync();
 			SemanticModel semanticModel = await document.GetSemanticModelAsync();
 
-			SyntaxNode firstClassDeclaration = root.DescendantNodes().FirstOrDefault(node => node.Kind() == SyntaxKind.ClassDeclaration || node.Kind() == SyntaxKind.StructDeclaration);
-
-			if (firstClassDeclaration == null)
+			SyntaxNode firstClassLikeDeclaration = root.DescendantNodes().FirstOrDefault(node =>
 			{
-				throw new InvalidOperationException("Could not find class or struct declaration.");
+				var kind = node.Kind();
+				return kind == SyntaxKind.ClassDeclaration || kind == SyntaxKind.StructDeclaration || kind == (SyntaxKind)9063; // record - Cannot update CodeAnalysis library because it's not found in VS 2019
+			});
+
+			if (firstClassLikeDeclaration == null)
+			{
+				throw new InvalidOperationException("Could not find class, struct or record declaration.");
 			}
 
-			if (firstClassDeclaration.ChildTokens().Any(node => node.Kind() == SyntaxKind.AbstractKeyword))
+			if (firstClassLikeDeclaration.ChildTokens().Any(node => node.Kind() == SyntaxKind.AbstractKeyword))
 			{
 				throw new InvalidOperationException("Cannot unit test an abstract class.");
 			}
 
-			SyntaxToken classIdentifierToken = firstClassDeclaration.ChildTokens().FirstOrDefault(n => n.Kind() == SyntaxKind.IdentifierToken);
+			SyntaxToken classIdentifierToken = firstClassLikeDeclaration.ChildTokens().FirstOrDefault(n => n.Kind() == SyntaxKind.IdentifierToken);
 			if (classIdentifierToken == default(SyntaxToken))
 			{
 				throw new InvalidOperationException("Could not find class identifier.");
 			}
 
-			NamespaceDeclarationSyntax namespaceDeclarationSyntax = null;
-			if (!TypeUtilities.TryGetParentSyntax(firstClassDeclaration, out namespaceDeclarationSyntax))
+			object namespaceDeclarationSyntax = null;
+			// 8842 is NamespaceDeclaration
+			// 8845 is FileScopedNamespaceDeclaration
+			// We would normally look for a node descended from BaseNamespaceDeclarationSyntax, but we don't have that type defined in the v1 Microsoft.CodeAnalysis DLL.
+			// We can fix this once we are building against a higher version and can drop support for VS 2019.
+			if (!TypeUtilities.TryGetParentSyntax(firstClassLikeDeclaration, (syntaxNode) => { return syntaxNode.RawKind == 8842 || syntaxNode.RawKind == 8845; }, out namespaceDeclarationSyntax))
 			{
 				throw new InvalidOperationException("Could not find class namespace.");
 			}
@@ -199,7 +207,10 @@ namespace UnitTestBoilerplate.Services
 			// Find property injection types
 			var injectableProperties = new List<InjectableProperty>();
 
-			string classFullName = namespaceDeclarationSyntax.Name + "." + classIdentifierToken;
+			// We need to get the name via reflection since the DLL we are building against does not have the BaseNamespaceDeclarationSyntax or FileScopedNamespaceDeclarationSyntax types.
+			string qualifiedNamespaceString = namespaceDeclarationSyntax.GetType().GetProperty("Name").GetValue(namespaceDeclarationSyntax, null).ToString();
+
+			string classFullName = qualifiedNamespaceString + "." + classIdentifierToken;
 			INamedTypeSymbol classType = semanticModel.Compilation.GetTypeByMetadataName(classFullName);
 
 			foreach (ISymbol member in classType.GetBaseTypesAndThis().SelectMany(n => n.GetMembers()))
@@ -227,7 +238,7 @@ namespace UnitTestBoilerplate.Services
 			// Find constructor injection types
 			List<InjectableType> constructorInjectionTypes = new List<InjectableType>();
 
-			SyntaxNode constructorDeclaration = firstClassDeclaration.ChildNodes().FirstOrDefault(n => n.Kind() == SyntaxKind.ConstructorDeclaration);
+			SyntaxNode constructorDeclaration = firstClassLikeDeclaration.ChildNodes().FirstOrDefault(n => n.Kind() == SyntaxKind.ConstructorDeclaration);
 
 			if (constructorDeclaration != null)
 			{
@@ -239,7 +250,7 @@ namespace UnitTestBoilerplate.Services
 			// Find public method declarations
 			IList<MethodDescriptor> methodDeclarations = new List<MethodDescriptor>();
 			foreach (MethodDeclarationSyntax methodDeclaration in
-				firstClassDeclaration.ChildNodes().Where(
+				firstClassLikeDeclaration.ChildNodes().Where(
 					n => n.Kind() == SyntaxKind.MethodDeclaration
 					&& ((MethodDeclarationSyntax)n).Modifiers.Any(m => m.IsKind(SyntaxKind.PublicKeyword))))
 			{
@@ -289,7 +300,7 @@ namespace UnitTestBoilerplate.Services
 				settings,
 				unitTestNamespace,
 				className,
-				namespaceDeclarationSyntax.Name.ToString(),
+				qualifiedNamespaceString,
 				injectableProperties,
 				constructorInjectionTypes,
 				injectedTypes,
