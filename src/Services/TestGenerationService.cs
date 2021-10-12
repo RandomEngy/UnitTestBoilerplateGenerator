@@ -690,8 +690,8 @@ namespace UnitTestBoilerplate.Services
 					WriteHttpMethodParameters(builder, methodDescriptor, FindIndent(testTemplate, propertyIndex));
 					break;
 
-				case "URIParameters":
-					WriteURIParameters(builder, methodDescriptor);
+				case "UriParameters":
+					WriteUriParameters(builder, methodDescriptor);
 					break;
 
 				default:
@@ -827,7 +827,7 @@ namespace UnitTestBoilerplate.Services
 			builder.AppendLine($"{currentIndent}	{methodDescriptor.MethodParameters[0].ArgumentName}");
 		}
 
-		private static void WriteURIParameters(StringBuilder builder, MethodDescriptor methodDescriptor)
+		private static void WriteUriParameters(StringBuilder builder, MethodDescriptor methodDescriptor)
 		{
 			var httpTypes = new List<HttpType>() { HttpType.None };
 
