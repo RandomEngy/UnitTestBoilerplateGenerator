@@ -257,8 +257,7 @@ namespace UnitTestBoilerplate.Services
 				var parameterList = GetParameterListNodes(methodDeclaration).ToList();
 				var parameterTypes = GetArgumentDescriptors(parameterList, semanticModel, mockFramework);
 
-				var attributeList = GetAttributeListNodes(methodDeclaration).ToList();
-				var httpType = GetHttpType(attributeList);
+				var attributeList = GetAttributeListNodes(methodDeclaration);
 
 				var isAsync =
 					methodDeclaration.Modifiers.Any(m => m.IsKind(SyntaxKind.AsyncKeyword)) ||
@@ -268,7 +267,7 @@ namespace UnitTestBoilerplate.Services
 
 				string returnType = methodDeclaration.ReturnType.ToFullString();
 
-				methodDeclarations.Add(new MethodDescriptor(methodDeclaration.Identifier.Text, parameterTypes, isAsync, hasReturnType, returnType, httpType));
+				methodDeclarations.Add(new MethodDescriptor(methodDeclaration.Identifier.Text, parameterTypes, isAsync, hasReturnType, returnType, attributeList));
 			}
 
 			string unitTestNamespace;
@@ -379,28 +378,6 @@ namespace UnitTestBoilerplate.Services
 			SyntaxNode parameterListNode = memberNode.ChildNodes().First(n => n.Kind() == SyntaxKind.ParameterList);
 
 			return parameterListNode.ChildNodes().Where(n => n.Kind() == SyntaxKind.Parameter).Cast<ParameterSyntax>();
-		}
-
-		private static HttpType GetHttpType(List<AttributeSyntax> attributeSyntaxList)
-		{
-			HttpType http = HttpType.None;
-			foreach (AttributeSyntax attributeSyntax in attributeSyntaxList)
-			{
-				string attributeName = attributeSyntax.Name.ToString();
-				if(attributeName.StartsWith("Http"))
-				{
-					if(Enum.TryParse(attributeName.Replace("Http",""), out http))
-					{
-						break;
-					}
-					else
-					{
-						http = HttpType.None;
-					}
-				}
-			}
-
-			return http;
 		}
 
 		private static IEnumerable<AttributeSyntax> GetAttributeListNodes(SyntaxNode memberNode)
@@ -632,7 +609,7 @@ namespace UnitTestBoilerplate.Services
 					break;
 
 				case "HttpType":
-					builder.Append(methodDescriptor.Http.ToString());
+					builder.Append(methodDescriptor.MethodAttributes.Http.ToString());
 					break;
 
 				case "TestMethodName":
@@ -783,7 +760,7 @@ namespace UnitTestBoilerplate.Services
 			var httpTypes = new List<HttpType>() { HttpType.None };
 
 			int numberOfParameters = methodDescriptor.MethodParameters.Count();
-			if (numberOfParameters == 0 || !httpTypes.Contains(methodDescriptor.Http))
+			if (numberOfParameters == 0 || !httpTypes.Contains(methodDescriptor.MethodAttributes.Http))
 			{
 				return;
 			}
@@ -818,7 +795,7 @@ namespace UnitTestBoilerplate.Services
 			var httpTypes = new List<HttpType>() { HttpType.Post };
 
 			int numberOfParameters = methodDescriptor.MethodParameters.Count();
-			if (numberOfParameters == 0 || !httpTypes.Contains(methodDescriptor.Http))
+			if (numberOfParameters == 0 || !httpTypes.Contains(methodDescriptor.MethodAttributes.Http))
 			{
 				return;
 			}
@@ -832,7 +809,7 @@ namespace UnitTestBoilerplate.Services
 			var httpTypes = new List<HttpType>() { HttpType.None };
 
 			int numberOfParameters = methodDescriptor.MethodParameters.Count();
-			if (numberOfParameters == 0 || httpTypes.Contains(methodDescriptor.Http) || (methodDescriptor.Http == HttpType.Post && numberOfParameters == 1))
+			if (numberOfParameters == 0 || httpTypes.Contains(methodDescriptor.MethodAttributes.Http) || (methodDescriptor.MethodAttributes.Http == HttpType.Post && numberOfParameters == 1))
 			{
 				return;
 			}

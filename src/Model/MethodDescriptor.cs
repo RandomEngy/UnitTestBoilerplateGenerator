@@ -1,15 +1,18 @@
-﻿namespace UnitTestBoilerplate.Model
+﻿using System.Collections.Generic;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+namespace UnitTestBoilerplate.Model
 {
 	public class MethodDescriptor
 	{
-		public MethodDescriptor(string name, MethodArgumentDescriptor[] methodParameters, bool isAsync, bool hasReturnType, string returnType, HttpType http)
+		public MethodDescriptor(string name, MethodArgumentDescriptor[] methodParameters, bool isAsync, bool hasReturnType, string returnType, IEnumerable<AttributeSyntax> attributeSyntaxes)
 		{
 			Name = name;
 			MethodParameters = methodParameters;
 			IsAsync = isAsync;
 			HasReturnType = hasReturnType;
 			ReturnType = returnType;
-			Http = http;
+			MethodAttributes = new MethodAttributesDescriptor(attributeSyntaxes);
 		}
 
 		public string Name { get; }
@@ -22,18 +25,6 @@
 
 		public string ReturnType { get; }
 
-		public HttpType Http { get; }
-	}
-
-	public enum HttpType
-	{
-		Get,
-		Post,
-		Put,
-		Patch,
-		Delete,
-		Options,
-		Head,
-		None
+		public MethodAttributesDescriptor MethodAttributes { get; }
 	}
 }
