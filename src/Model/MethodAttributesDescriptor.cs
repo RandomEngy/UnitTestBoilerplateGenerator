@@ -42,8 +42,9 @@ namespace UnitTestBoilerplate.Model
 				string attributeName = attributeSyntax.Name.ToString();
 				if(attributeName.StartsWith("Http"))
 				{
-					if(Enum.TryParse(attributeName.Replace("Http",""), out http))
+					if(Enum.TryParse(attributeName.Replace("Http",""), out HttpType httpTemp))
 					{
+						http = httpTemp;
 						break;
 					}
 				}
