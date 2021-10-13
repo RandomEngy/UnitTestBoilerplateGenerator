@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+// ReSharper disable All
 
 namespace UnitTestBoilerplate.Model
 {
@@ -26,11 +27,11 @@ namespace UnitTestBoilerplate.Model
 		{
 			get
 			{
-				if (!httpType.HasValue)
+				if (!this.httpType.HasValue)
 				{
-					httpType = GetHttpType();
+					this.httpType = GetHttpType();
 				}
-				return httpType.Value;
+				return this.httpType.Value;
 			}
 		}
 
@@ -44,7 +45,7 @@ namespace UnitTestBoilerplate.Model
 		private HttpType GetHttpType()
 		{
 			HttpType http = HttpType.None;
-			foreach (AttributeSyntax attributeSyntax in attributeSyntaxes)
+			foreach (AttributeSyntax attributeSyntax in this.attributeSyntaxes)
 			{
 				string attributeName = attributeSyntax.Name.ToString();
 				if(attributeName.StartsWith("Http"))
