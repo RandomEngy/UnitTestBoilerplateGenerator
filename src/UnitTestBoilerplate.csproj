@@ -135,6 +135,11 @@
     <Compile Include="Services\ITestGenerationService.cs" />
     <Compile Include="Services\MockBoilerplateSettingsFactory.cs" />
     <Compile Include="Services\PersonalBoilerplateSettingsStore.cs" />
+    <Compile Include="Services\ProjectSelection\ITestProjectSelectionStrategy.cs" />
+    <Compile Include="Services\ProjectSelection\NameHeuristicsStrategy.cs" />
+    <Compile Include="Services\ProjectSelection\PreviouslySelectedProjectStrategy.cs" />
+    <Compile Include="Services\ProjectSelection\TakeFirstStrategy.cs" />
+    <Compile Include="Services\ProjectSelection\TemplateBasedStrategy.cs" />
     <Compile Include="Services\SettingsCoordinator.cs" />
     <Compile Include="Services\WorkspaceBoilerplateSettingsStore.cs" />
     <Compile Include="Services\TestGenerationService.cs" />

@@ -13,10 +13,13 @@ namespace UnitTestBoilerplate.Model
 		public ProjectItemSummary(ProjectItem projectItem)
 		{
 			this.FilePath = projectItem.FileNames[1];
+			this.ProjectName = projectItem.ContainingProject.Name;
 			this.ProjectFilePath = projectItem.ContainingProject.FullName;
 		}
 
 		public string FilePath { get; }
+
+		public string ProjectName { get; }
 
 		public string ProjectFilePath { get; }
 	}

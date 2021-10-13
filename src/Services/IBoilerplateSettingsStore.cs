@@ -14,6 +14,7 @@ namespace UnitTestBoilerplate.Services
 	{
 		string PreferredTestFrameworkName { get; set; }
 		string PreferredMockFrameworkName { get; set; }
+		string TestProjectNameFormat { get; set; }
 		string FileNameTemplate { get; set; }
 		IDictionary<string, string> CustomMocks { get; set; }
 		string CustomMockFieldDeclarationTemplate { get; set; }

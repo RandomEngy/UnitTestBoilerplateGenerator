@@ -69,6 +69,12 @@ namespace UnitTestBoilerplate.Services
 			set => this.jsonObject.PreferredMockFrameworkName = value;
 		}
 
+		public string TestProjectNameFormat
+		{
+			get => this.jsonObject.TestProjectNameFormat;
+			set => this.jsonObject.TestProjectNameFormat = value;
+		}
+
 		public string FileNameTemplate
 		{
 			get => this.jsonObject.FileNameTemplate;

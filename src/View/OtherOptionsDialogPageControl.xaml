@@ -16,11 +16,19 @@
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</UserControl.Resources>
-	<StackPanel Orientation="Vertical">
-		<TextBlock Text="Test file name format" />
-		<TextBox Style="{StaticResource LineTextBox}" Text="{Binding TestFileNameFormat, UpdateSourceTrigger=PropertyChanged}" />
+    <ScrollViewer>
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" Style="{StaticResource LineSection}">
+            <TextBlock Text="Test project name format" />
+            <TextBox Style="{StaticResource LineTextBox}" Text="{Binding TestProjectNameFormat, UpdateSourceTrigger=PropertyChanged}" />
+		</StackPanel>
 
-		<Grid Margin="0 12 0 0" ToolTip="The preferred framework will be chosen by default when no frameworks are found or when multiple different frameworks are found. Leave as 'None' and we will make our best guess.">
+        <StackPanel Orientation="Vertical" Style="{StaticResource LineSection}">
+            <TextBlock Text="Test file name format" />
+            <TextBox Style="{StaticResource LineTextBox}" Text="{Binding TestFileNameFormat, UpdateSourceTrigger=PropertyChanged}" />
+		</StackPanel>
+
+        <Grid Margin="0 12 0 0" ToolTip="The preferred framework will be chosen by default when no frameworks are found or when multiple different frameworks are found. Leave as 'None' and we will make our best guess.">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="4" />
@@ -108,4 +116,5 @@
 			<TextBox Style="{StaticResource LineTextBox}" Text="{Binding CustomMockObjectReferenceTemplate, UpdateSourceTrigger=PropertyChanged}" />
 		</StackPanel>
 	</StackPanel>
+	</ScrollViewer>
 </UserControl>

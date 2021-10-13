@@ -51,7 +51,26 @@ namespace UnitTestBoilerplate.Services
 		    }
 	    }
 
-	    public string FileNameTemplate
+	    public string TestProjectNameFormat
+	    {
+		    get
+		    {
+			    string projectNameFormat = this.store.TestProjectNameFormat;
+			    if (!string.IsNullOrWhiteSpace(projectNameFormat))
+			    {
+				    return projectNameFormat;
+			    }
+
+			    return "$ProjectName$.Test";
+		    }
+
+		    set
+		    {
+			    this.store.TestProjectNameFormat = value;
+		    }
+		}
+
+		public string FileNameTemplate
 	    {
 		    get
 		    {
