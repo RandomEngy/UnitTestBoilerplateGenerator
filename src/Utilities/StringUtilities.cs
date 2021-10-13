@@ -99,8 +99,8 @@ namespace UnitTestBoilerplate.Utilities
 				case "SingleLine":
 					tokenValue = RunSingleLineReplacement(tokenValue);
 					break;
-				case "StdHttpFuncName":
-					tokenValue = RunStdHttpFuncNameReplacement(tokenValue, args);
+				case "ReplaceOneFullMatch":
+					tokenValue = RunReplaceOneFullMatchReplacement(tokenValue, args);
 					break;
 				default:
 					// Ignore the modifier
@@ -227,7 +227,7 @@ namespace UnitTestBoilerplate.Utilities
 			return tokenValue.Replace(Environment.NewLine, "");
 		}
 
-		private static string RunStdHttpFuncNameReplacement(string tokenValue, string args)
+		private static string RunReplaceOneFullMatchReplacement(string tokenValue, string args)
 		{
 			//Handle arguments in pairs.
 			//The first value is the Key, the HTTP type identified by the value.
