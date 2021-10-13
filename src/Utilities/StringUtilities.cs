@@ -73,10 +73,8 @@ namespace UnitTestBoilerplate.Utilities
 				return tokenValue;
 			}
 
-			string nextModifier;
-			string arg;
-			SplitToken(ref myModifier, out nextModifier);
-			SplitModifierArg(ref myModifier, out arg);
+			SplitToken(ref myModifier, out string nextModifier);
+			SplitModifierArgs(ref myModifier, out string args);
 
 			switch (myModifier)
 			{
@@ -87,10 +85,10 @@ namespace UnitTestBoilerplate.Utilities
 					tokenValue = RunNewLineIfPopulatedReplacement(tokenValue);
 					break;
 				case "Remove":
-					tokenValue = RunRemoveReplacement(tokenValue, arg);
+					tokenValue = RunRemoveReplacement(tokenValue, args);
 					break;
 				case "RemoveGeneric":
-					tokenValue = RunRemoveGenericReplacement(tokenValue, arg);
+					tokenValue = RunRemoveGenericReplacement(tokenValue, args);
 					break;
 				case "LowerCase":
 					tokenValue = RunLowerCaseReplacement(tokenValue);
@@ -130,16 +128,16 @@ namespace UnitTestBoilerplate.Utilities
 			}
 		}
 
-		private static void SplitModifierArg(ref string modifier, out string arg)
+		private static void SplitModifierArgs(ref string modifier, out string args)
 		{
 			int parenthesisIndex = modifier.IndexOf("(", StringComparison.Ordinal);
 			if (parenthesisIndex <= 0)
 			{
-				arg = string.Empty;
+				args = string.Empty;
 			}
 			else
 			{
-				arg = modifier.Substring(parenthesisIndex + 1, modifier.Length - parenthesisIndex - 2);
+				args = modifier.Substring(parenthesisIndex + 1, modifier.Length - parenthesisIndex - 2);
 				modifier = modifier.Substring(0, parenthesisIndex);
 			}
 		}
