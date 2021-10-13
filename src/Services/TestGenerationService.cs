@@ -764,10 +764,8 @@ namespace UnitTestBoilerplate.Services
 		/// <param name="currentIndent">How much indentation is currently expected.</param>
 		private static void WriteMethodParameters(StringBuilder builder, MethodDescriptor methodDescriptor, string currentIndent)
 		{
-			var httpTypes = new List<HttpType>() { HttpType.None };
-
 			int numberOfParameters = methodDescriptor.MethodParameters.Count();
-			if (numberOfParameters == 0 || !httpTypes.Contains(methodDescriptor.MethodAttributes.Http))
+			if (numberOfParameters == 0)
 			{
 				return;
 			}
