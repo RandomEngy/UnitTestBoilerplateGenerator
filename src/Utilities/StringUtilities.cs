@@ -100,7 +100,7 @@ namespace UnitTestBoilerplate.Utilities
 					tokenValue = RunSingleLineReplacement(tokenValue);
 					break;
 				case "StdHttpFuncName":
-					tokenValue = RunStdHttpFuncNameReplacement(tokenValue);
+					tokenValue = RunStdHttpFuncNameReplacement(tokenValue, args);
 					break;
 				default:
 					// Ignore the modifier
@@ -227,14 +227,21 @@ namespace UnitTestBoilerplate.Utilities
 			return tokenValue.Replace(Environment.NewLine, "");
 		}
 
-		private static string RunStdHttpFuncNameReplacement(string tokenValue)
+		private static string RunStdHttpFuncNameReplacement(string tokenValue, string args)
 		{
-			switch (tokenValue)
+			//Handle arguments in pairs.
+			//The first value is the Key, the HTTP type identified by the value.
+			//The second value is the string the user wants to associate with that HTTP type, which should be the specific
+			//function name they want to be used to call that HTTP type.
+			//The syntax used for that function is implemented by other tokens.
+			string[] argParts = args.Split(',');
+			for (int replacementIndex = 1; replacementIndex < argParts.Length; replacementIndex = replacementIndex + 2)
 			{
-				case "Get":
-					return "GetAsync";
-				case "Post":
-					return "PostAsJsonAsync";
+				int httpTypeIndex = replacementIndex - 1;
+				if (string.Equals(argParts[httpTypeIndex], tokenValue, StringComparison.CurrentCultureIgnoreCase))
+				{
+					return argParts[replacementIndex];
+				}
 			}
 			return tokenValue;
 		}
