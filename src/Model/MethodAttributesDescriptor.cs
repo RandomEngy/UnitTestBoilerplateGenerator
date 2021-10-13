@@ -6,12 +6,12 @@ namespace UnitTestBoilerplate.Model
 {
 	public class MethodAttributesDescriptor
 	{
-		private HttpType? _httpType;
-		private readonly IEnumerable<AttributeSyntax> _attributeSyntaxes;
+		private HttpType? httpType;
+		private readonly IEnumerable<AttributeSyntax> attributeSyntaxes;
 
 		public MethodAttributesDescriptor(IEnumerable<AttributeSyntax> attributeSyntaxes)
 		{
-			_attributeSyntaxes = attributeSyntaxes;
+			this.attributeSyntaxes = attributeSyntaxes;
 		}
 
 		/**
@@ -28,18 +28,18 @@ namespace UnitTestBoilerplate.Model
 		{
 			get
 			{
-				if (!_httpType.HasValue)
+				if (!httpType.HasValue)
 				{
-					_httpType = GetHttpType();
+					httpType = GetHttpType();
 				}
-				return _httpType.Value;
+				return httpType.Value;
 			}
 		}
 
 		private HttpType GetHttpType()
 		{
 			HttpType http = HttpType.None;
-			foreach (AttributeSyntax attributeSyntax in _attributeSyntaxes)
+			foreach (AttributeSyntax attributeSyntax in attributeSyntaxes)
 			{
 				string attributeName = attributeSyntax.Name.ToString();
 				if(attributeName.StartsWith("Http"))
