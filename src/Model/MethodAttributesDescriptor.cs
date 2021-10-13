@@ -15,7 +15,7 @@ namespace UnitTestBoilerplate.Model
 		}
 
 		/// <summary>Analyzes the Attributes on a method and determines whether it has any ASP.NET MVC
-		/// properties to make the method an HTTP Endpoint Method.  If there is, returns which type.
+		/// properties to make the method an HTTP REST Endpoint Method.  If there is, returns which type.
 		/// If there isn't, it returns HttpType.None.
 		/// Results are cached for each tested method for the remainder of the run.</summary>
 		/// <remarks>This property can be used to determine whether ASP.NET Http style formatting is required and
@@ -34,6 +34,13 @@ namespace UnitTestBoilerplate.Model
 			}
 		}
 
+		/// <summary>
+		/// Analyzes the Attributes on the current method and determines whether it has any ASP.NET MVC
+		/// properties to make the method an HTTP REST Endpoint Method.  If there is, returns which type.
+		/// If there isn't, it returns HttpType.None.
+		/// </summary>
+		/// <returns>HttpType.None if no ASP.NET style attributes can be found on the function.  Otherwise,
+		/// the first HttpType that can be found.</returns>
 		private HttpType GetHttpType()
 		{
 			HttpType http = HttpType.None;

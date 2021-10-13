@@ -227,13 +227,17 @@ namespace UnitTestBoilerplate.Utilities
 			return tokenValue.Replace(Environment.NewLine, "");
 		}
 
+		/// <summary>
+		/// Implements ReplaceOneFullMatch.  Takes an even numbered set of comma separated arguments.  Each pair
+		/// denotes a key/value pair.  If the token matches the key, it is replaced with the corresponding value.
+		/// This function is not recursive.  Only the first match is processed.  Subsequent pairs will be left
+		/// unevaluated.
+		/// </summary>
+		/// <param name="tokenValue">Value from the token to be possibly replaced.</param>
+		/// <param name="args">Comma separated list of key/value pairs</param>
+		/// <returns>The value corresponding to the key that is the case insensitive equivalent of the tokenValue. Otherwise, the original tokenValue.</returns>
 		private static string RunReplaceOneFullMatchReplacement(string tokenValue, string args)
 		{
-			//Handle arguments in pairs.
-			//The first value is the Key, the HTTP type identified by the value.
-			//The second value is the string the user wants to associate with that HTTP type, which should be the specific
-			//function name they want to be used to call that HTTP type.
-			//The syntax used for that function is implemented by other tokens.
 			string[] argParts = args.Split(',');
 			for (int replacementIndex = 1; replacementIndex < argParts.Length; replacementIndex = replacementIndex + 2)
 			{
