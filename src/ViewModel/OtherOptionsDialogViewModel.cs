@@ -42,6 +42,7 @@ namespace UnitTestBoilerplate.ViewModel
 		{
 			this.settings = this.SettingsFactory.Get();
 
+			this.TestProjectNameFormat = this.settings.TestProjectNameFormat;
 			this.TestFileNameFormat = this.settings.FileNameTemplate;
 			TestFramework settingsPreferredTestFramework = this.settings.PreferredTestFramework;
 
@@ -90,6 +91,7 @@ namespace UnitTestBoilerplate.ViewModel
 
 		public void SaveCurrentSettings()
 		{
+			this.settings.TestProjectNameFormat = this.TestProjectNameFormat;
 			this.settings.FileNameTemplate = this.TestFileNameFormat;
 
 			if (this.PreferredTestFramework.Name == AutoName)
@@ -169,6 +171,13 @@ namespace UnitTestBoilerplate.ViewModel
 
 				this.Set(ref this.preferredMockFramework, value);
 			}
+		}
+
+		private string testProjectNameFormat;
+		public string TestProjectNameFormat
+		{
+			get => this.testProjectNameFormat;
+			set => this.Set(ref this.testProjectNameFormat, value);
 		}
 
 		private string testFileNameFormat;

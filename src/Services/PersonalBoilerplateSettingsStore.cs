@@ -26,6 +26,8 @@ namespace UnitTestBoilerplate.Services
 
 		private const string PreferredMockFrameworkKey = "PreferredMockFramework";
 
+		private const string TestProjectNameFormatKey = "TestProjectNameFormat";
+
 		private const string FileNameTemplateKey = "FileNameTemplate";
 
 		private const string CustomMocksKey = "CustomMocks";
@@ -115,6 +117,27 @@ namespace UnitTestBoilerplate.Services
 				{
 					this.store.SetString(CollectionPath, PreferredMockFrameworkKey, value);
 				}
+			}
+		}
+
+		public string TestProjectNameFormat
+		{
+			get
+			{
+				if (this.store.PropertyExists(CollectionPath, TestProjectNameFormatKey))
+				{
+					string projectNameFormat = this.store.GetString(CollectionPath, TestProjectNameFormatKey);
+					if (!string.IsNullOrWhiteSpace(projectNameFormat))
+					{
+						return projectNameFormat;
+					}
+				}
+
+				return null;
+			}
+			set
+			{
+				this.store.SetString(CollectionPath, TestProjectNameFormatKey, value);
 			}
 		}
 

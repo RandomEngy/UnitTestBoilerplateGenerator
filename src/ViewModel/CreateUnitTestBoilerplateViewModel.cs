@@ -18,6 +18,7 @@ using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Shell;
 using UnitTestBoilerplate.Model;
 using UnitTestBoilerplate.Services;
+using UnitTestBoilerplate.Services.ProjectSelection;
 using UnitTestBoilerplate.Utilities;
 using Project = EnvDTE.Project;
 using Task = System.Threading.Tasks.Task;
@@ -39,9 +40,6 @@ namespace UnitTestBoilerplate.ViewModel
 			this.TestProjects = new List<TestProject>();
 			IList<Project> allProjects = SolutionUtilities.GetProjects(this.dte);
 
-			string lastSelectedProject = this.Cache.GetLastSelectedProject(this.dte.Solution.FileName);
-
-
 			var newProjectList = new List<TestProject>();
 			foreach (Project project in allProjects)
 			{
@@ -56,37 +54,17 @@ namespace UnitTestBoilerplate.ViewModel
 
 			this.TestProjects = newProjectList.OrderBy(p => p.Name).ToList();
 
-			// First see if we've saved an entry for the last selected test project for this solution.
-			if (this.selectedProject == null && lastSelectedProject != null)
+			var selectionStrategies = new ITestProjectSelectionStrategy[]
 			{
-				foreach (var project in this.TestProjects)
-				{
-					if (string.Equals(lastSelectedProject, project.Project.FullName, StringComparison.OrdinalIgnoreCase))
-					{
-						this.selectedProject = project;
-						break;
-					}
-				}
-			}
+				new TemplateBasedStrategy(this.SettingsFactory.Get(), this.dte),
+				new PreviouslySelectedProjectStrategy(Cache, dte, this.selectedProject),
+				new NameHeuristicsStrategy(),
+				new TakeFirstStrategy()
+			};
 
-			// If we don't have an entry yet, look for a project name that contains "Test"
-			if (this.selectedProject == null)
-			{
-				foreach (var project in this.TestProjects)
-				{
-					if (project.Name.ToLowerInvariant().Contains("test"))
-					{
-						this.selectedProject = project;
-						break;
-					}
-				}
-			}
-
-			// Otherwise select the first project
-			if (this.selectedProject == null && this.TestProjects.Count > 0)
-			{
-				this.selectedProject = this.TestProjects[0];
-			}
+			this.selectedProject = selectionStrategies
+				.Select(strategy => strategy.Apply(this.TestProjects))
+				.FirstOrDefault(project => project != null);
 
 			this.TestFrameworkChoices = TestFrameworks.List;
 			this.MockFrameworkChoices = MockFrameworks.List;
