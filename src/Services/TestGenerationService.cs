@@ -755,6 +755,13 @@ namespace UnitTestBoilerplate.Services
 			builder.Append(")");
 		}
 
+		/// <summary>
+		/// Original WriteMethodParameters function.  Should not be used when trying to create tests for Asp.NET endpoint functions.
+		/// Use a combination of WriteUriParameters and WriteHttpMethodParameters
+		/// </summary>
+		/// <param name="builder">StringBuilder to add the parameters to.</param>
+		/// <param name="methodDescriptor">Object describing the method with the parameters to add.</param>
+		/// <param name="currentIndent">How much indentation is currently expected.</param>
 		private static void WriteMethodParameters(StringBuilder builder, MethodDescriptor methodDescriptor, string currentIndent)
 		{
 			var httpTypes = new List<HttpType>() { HttpType.None };
@@ -790,6 +797,17 @@ namespace UnitTestBoilerplate.Services
 			}
 		}
 
+		/// <summary>
+		/// Use this to write the only method parameter that should need to be included with a ASP.NET Client side Http Post call.
+		/// Assumptions:
+		/// - The only one of several parameters that should need to be passed directly through the body is the first one.
+		/// - That parameter is a non primitive type.
+		/// Be careful.  These are not always valid assumptions.  More smarts could be given this function to handle other valid http call
+		/// scenarios.  These just work for the author most of the time.
+		/// </summary>
+		/// <param name="builder">StringBuilder to add the parameters to.</param>
+		/// <param name="methodDescriptor">Object describing the method with the parameters to add.</param>
+		/// <param name="currentIndent">How much indentation is currently expected.</param>
 		private static void WriteHttpMethodParameters(StringBuilder builder, MethodDescriptor methodDescriptor, string currentIndent)
 		{
 			var httpTypes = new List<HttpType>() { HttpType.Post };
@@ -804,6 +822,20 @@ namespace UnitTestBoilerplate.Services
 			builder.AppendLine($"{currentIndent}	{methodDescriptor.MethodParameters[0].ArgumentName}");
 		}
 
+		/// <summary>
+		/// Use this to write one or more parameters to the MUT in the Query String of the URL call.
+		/// Assumptions:
+		/// - If the HttpType is a POST:
+		/// -- The first parameter does not need to be on the Query String since it is passed through the Body of the call.
+		/// -- All other parameters are primitive types and should be in the Query String.
+		/// - If the HttpType is anything else:
+		/// -- All parameters are primitive types and should be in the Query String.
+		/// Be careful.  These are not always valid assumptions.  More smarts could be given this function to handle other valid http call
+		/// scenarios.  These just work for the author most of the time.
+		/// </summary>
+		/// <param name="builder">StringBuilder to add the parameters to.</param>
+		/// <param name="methodDescriptor">Object describing the method with the parameters to add.</param>
+		/// <param name="currentIndent">How much indentation is currently expected.</param>
 		private static void WriteUriParameters(StringBuilder builder, MethodDescriptor methodDescriptor)
 		{
 			var httpTypes = new List<HttpType>() { HttpType.None };

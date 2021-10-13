@@ -5,6 +5,20 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace UnitTestBoilerplate.Model
 {
+	/// <summary>
+	/// Holds and analyzes an Enumerable of objects representing a particular Method's Attributes,
+	/// and presents domain specific data necessary to give users the ability to specify UTBG templates
+	/// for their domain.
+	///
+	/// The initial use of this class is to determine whether the given function is an ASP.NET REST
+	/// endpoint, and if so, which type.  If there is one, checks as few attributes as possible to find
+	/// it and caches the results so that each method only has to be evaluated once.
+	///
+	/// Future extended analysis of method attributes may require more than the minimum analysis required
+	/// to find a simple attribute name.  Such searches should follow the standard of not being evaluated
+	/// until the caller actually calls for the data, and should be cached once found, as no changes can
+	/// be expected during the same generation session.
+	/// </summary>
 	public class MethodAttributesDescriptor
 	{
 		private HttpType? httpType;
