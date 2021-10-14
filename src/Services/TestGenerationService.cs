@@ -15,8 +15,10 @@ using UnitTestBoilerplate.Utilities;
 namespace UnitTestBoilerplate.Services
 {
 	[Export(typeof(ITestGenerationService))]
-	public class TestGenerationService : ITestGenerationService
-	{
+    public class TestGenerationService : ITestGenerationService
+    {
+		#region Properties
+
 		private static readonly HashSet<string> PropertyInjectionAttributeNames = new HashSet<string>
 		{
 			"Microsoft.Practices.Unity.DependencyAttribute",
@@ -36,6 +38,10 @@ namespace UnitTestBoilerplate.Services
 
 		[Import]
 		internal IBoilerplateSettingsFactory SettingsFactory { get; set; }
+
+		#endregion Properties
+
+		#region Public Functions
 
 		public async Task<string> GenerateUnitTestFileAsync(
 			ProjectItemSummary selectedFile,
@@ -143,6 +149,10 @@ namespace UnitTestBoilerplate.Services
 			return relativePath;
 		}
 
+		#endregion Public Functions
+
+		#region Collect Tested Class Data
+
 		private async Task<TestGenerationContext> CollectTestGenerationContextAsync(
 			ProjectItemSummary selectedFile,
 			string targetProjectNamespace,
@@ -245,8 +255,9 @@ namespace UnitTestBoilerplate.Services
 					&& ((MethodDeclarationSyntax)n).Modifiers.Any(m => m.IsKind(SyntaxKind.PublicKeyword))))
 			{
 				var parameterList = GetParameterListNodes(methodDeclaration).ToList();
-
 				var parameterTypes = GetArgumentDescriptors(parameterList, semanticModel, mockFramework);
+
+				var attributeList = GetAttributeListNodes(methodDeclaration);
 
 				var isAsync =
 					methodDeclaration.Modifiers.Any(m => m.IsKind(SyntaxKind.AsyncKeyword)) ||
@@ -254,7 +265,9 @@ namespace UnitTestBoilerplate.Services
 
 				var hasReturnType = !DoesReturnNonGenericTask(methodDeclaration) && !DoesReturnVoid(methodDeclaration);
 
-				methodDeclarations.Add(new MethodDescriptor(methodDeclaration.Identifier.Text, parameterTypes, isAsync, hasReturnType));
+				string returnType = methodDeclaration.ReturnType.ToFullString();
+
+				methodDeclarations.Add(new MethodDescriptor(methodDeclaration.Identifier.Text, parameterTypes, isAsync, hasReturnType, returnType, attributeList));
 			}
 
 			string unitTestNamespace;
@@ -367,11 +380,22 @@ namespace UnitTestBoilerplate.Services
 			return parameterListNode.ChildNodes().Where(n => n.Kind() == SyntaxKind.Parameter).Cast<ParameterSyntax>();
 		}
 
+		private static IEnumerable<AttributeSyntax> GetAttributeListNodes(SyntaxNode memberNode)
+		{
+			SyntaxNode parameterListNode = memberNode.ChildNodes().FirstOrDefault(n => n.Kind() == SyntaxKind.AttributeList);
+
+			return parameterListNode == null ? new List<AttributeSyntax>() : parameterListNode?.ChildNodes().Where(n => n.Kind() == SyntaxKind.Attribute).Cast<AttributeSyntax>();
+		}
+
 		private async Task<TestGenerationContext> CollectTestGenerationContextAsync(ProjectItemSummary selectedFile, EnvDTE.Project targetProject, TestFramework testFramework, MockFramework mockFramework, IBoilerplateSettings settings)
 		{
 			string targetProjectNamespace = targetProject.Properties.Item("DefaultNamespace").Value as string;
 			return await this.CollectTestGenerationContextAsync(selectedFile, targetProjectNamespace, testFramework, mockFramework, settings);
 		}
+
+		#endregion Collect Tested Class Data
+
+		#region Generate Test Class
 
 		private string GenerateUnitTestContents(TestGenerationContext context)
 		{
@@ -451,6 +475,10 @@ namespace UnitTestBoilerplate.Services
 		{
 			switch (tokenName)
 			{
+				case "":
+					builder.Append("$");
+					break;
+
 				case "Namespace":
 					builder.Append(context.UnitTestNamespace);
 					break;
@@ -574,8 +602,16 @@ namespace UnitTestBoilerplate.Services
 			{
 				case "TestedMethodName":
 					builder.Append(methodDescriptor.Name);
-
 					break;
+
+				case "TestedMethodReturnType":
+					builder.Append(methodDescriptor.ReturnType);
+					break;
+
+				case "HttpType":
+					builder.Append(methodDescriptor.MethodAttributes.Http.ToString());
+					break;
+
 				case "TestMethodName":
 					this.WriteTestMethodName(builder, context, methodDescriptor);
 					break;
@@ -585,7 +621,6 @@ namespace UnitTestBoilerplate.Services
 					{
 						builder.Append("async");
 					}
-
 					break;
 
 				case "AsyncReturnType":
@@ -606,7 +641,6 @@ namespace UnitTestBoilerplate.Services
 							builder.AppendLine();
 						}
 					}
-
 					break;
 
 				case "MethodInvocationPrefix":
@@ -619,12 +653,22 @@ namespace UnitTestBoilerplate.Services
 					{
 						builder.Append("await ");
 					}
-
 					break;
 
 				case "MethodInvocation":
 					WriteMethodInvocation(builder, methodDescriptor, FindIndent(testTemplate, propertyIndex));
+					break;
 
+				case "MethodParameters":
+					WriteMethodParameters(builder, methodDescriptor, FindIndent(testTemplate, propertyIndex));
+					break;
+
+				case "HttpMethodParameters":
+					WriteHttpMethodParameters(builder, methodDescriptor, FindIndent(testTemplate, propertyIndex));
+					break;
+
+				case "UriParameters":
+					WriteUriParameters(builder, methodDescriptor);
 					break;
 
 				default:
@@ -706,43 +750,105 @@ namespace UnitTestBoilerplate.Services
 
 		private static void WriteMethodInvocation(StringBuilder builder, MethodDescriptor methodDescriptor, string currentIndent)
 		{
-			int numberOfParameters = methodDescriptor.MethodParameters.Count();
 			builder.Append($".{methodDescriptor.Name}(");
+			WriteMethodParameters(builder, methodDescriptor, currentIndent);
+			builder.Append(")");
+		}
 
+		/// <summary>
+		/// Original WriteMethodParameters function.  Should not be used when trying to create tests for Asp.NET endpoint functions.
+		/// Use a combination of WriteUriParameters and WriteHttpMethodParameters
+		/// </summary>
+		/// <param name="builder">StringBuilder to add the parameters to.</param>
+		/// <param name="methodDescriptor">Object describing the method with the parameters to add.</param>
+		/// <param name="currentIndent">How much indentation is currently expected.</param>
+		private static void WriteMethodParameters(StringBuilder builder, MethodDescriptor methodDescriptor, string currentIndent)
+		{
+			int numberOfParameters = methodDescriptor.MethodParameters.Count();
 			if (numberOfParameters == 0)
 			{
-				builder.Append(")");
+				return;
 			}
-			else
+
+			builder.AppendLine();
+
+			for (int j = 0; j < numberOfParameters; j++)
 			{
-				builder.AppendLine();
+				builder.Append($"{currentIndent}	");
 
-				for (int j = 0; j < numberOfParameters; j++)
+				switch (methodDescriptor.MethodParameters[j].Modifier)
 				{
-					builder.Append($"{currentIndent}	");
-
-					switch (methodDescriptor.MethodParameters[j].Modifier)
-					{
-						case ParameterModifier.Out:
-							builder.Append("out ");
-							break;
-						case ParameterModifier.Ref:
-							builder.Append("ref ");
-							break;
-						default:
-							break;
-					}
-					builder.Append($"{methodDescriptor.MethodParameters[j].ArgumentName}");
-
-					if (j < numberOfParameters - 1)
-					{
-						builder.AppendLine(",");
-					}
-					else
-					{
-						builder.Append(")");
-					}
+					case ParameterModifier.Out:
+						builder.Append("out ");
+						break;
+					case ParameterModifier.Ref:
+						builder.Append("ref ");
+						break;
 				}
+
+				builder.Append($"{methodDescriptor.MethodParameters[j].ArgumentName}");
+
+				if (j < numberOfParameters - 1)
+				{
+					builder.AppendLine(",");
+				}
+			}
+		}
+
+		/// <summary>
+		/// Use this to write the only method parameter that should need to be included with a ASP.NET Client side Http Post call.
+		/// Assumptions:
+		/// - The only one of several parameters that should need to be passed directly through the body is the first one.
+		/// - That parameter is a non primitive type.
+		/// Be careful.  These are not always valid assumptions.  More smarts could be given this function to handle other valid http call
+		/// scenarios.  These just work for the author most of the time.
+		/// </summary>
+		/// <param name="builder">StringBuilder to add the parameters to.</param>
+		/// <param name="methodDescriptor">Object describing the method with the parameters to add.</param>
+		/// <param name="currentIndent">How much indentation is currently expected.</param>
+		private static void WriteHttpMethodParameters(StringBuilder builder, MethodDescriptor methodDescriptor, string currentIndent)
+		{
+			var httpTypes = new List<HttpType>() { HttpType.Post };
+
+			int numberOfParameters = methodDescriptor.MethodParameters.Count();
+			if (numberOfParameters == 0 || !httpTypes.Contains(methodDescriptor.MethodAttributes.Http))
+			{
+				return;
+			}
+
+			builder.AppendLine();
+			builder.AppendLine($"{currentIndent}	{methodDescriptor.MethodParameters[0].ArgumentName}");
+		}
+
+		/// <summary>
+		/// Use this to write one or more parameters to the MUT in the Query String of the URL call.
+		/// Assumptions:
+		/// - If the HttpType is a POST:
+		/// -- The first parameter does not need to be on the Query String since it is passed through the Body of the call.
+		/// -- All other parameters are primitive types and should be in the Query String.
+		/// - If the HttpType is anything else:
+		/// -- All parameters are primitive types and should be in the Query String.
+		/// Be careful.  These are not always valid assumptions.  More smarts could be given this function to handle other valid http call
+		/// scenarios.  These just work for the author most of the time.
+		/// </summary>
+		/// <param name="builder">StringBuilder to add the parameters to.</param>
+		/// <param name="methodDescriptor">Object describing the method with the parameters to add.</param>
+		/// <param name="currentIndent">How much indentation is currently expected.</param>
+		private static void WriteUriParameters(StringBuilder builder, MethodDescriptor methodDescriptor)
+		{
+			var httpTypes = new List<HttpType>() { HttpType.None };
+
+			int numberOfParameters = methodDescriptor.MethodParameters.Count();
+			if (numberOfParameters == 0 || httpTypes.Contains(methodDescriptor.MethodAttributes.Http) || (methodDescriptor.MethodAttributes.Http == HttpType.Post && numberOfParameters == 1))
+			{
+				return;
+			}
+
+			for (int j = 0; j < numberOfParameters; j++)
+			{
+				builder.Append(j==0 ? "?" : "&");
+				string argumentName = methodDescriptor.MethodParameters[j].ArgumentName;
+				builder.Append($"{argumentName}={{{argumentName}}}");
 			}
 		}
 
@@ -1097,5 +1203,7 @@ namespace UnitTestBoilerplate.Services
 				}
 			}
 		}
+
+		#endregion Generate Test Class
 	}
 }

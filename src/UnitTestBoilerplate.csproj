@@ -120,6 +120,7 @@
     <Compile Include="Model\BoilerplateSettingsJson.cs" />
     <Compile Include="Model\ISettingsPageViewModel.cs" />
     <Compile Include="Model\MethodArgumentDescriptor.cs" />
+    <Compile Include="Model\MethodAttributesDescriptor.cs" />
     <Compile Include="Model\MethodDescriptor.cs" />
     <Compile Include="Model\SelfTestDetectionTest.cs" />
     <Compile Include="Services\BoilerplateCache.cs" />
