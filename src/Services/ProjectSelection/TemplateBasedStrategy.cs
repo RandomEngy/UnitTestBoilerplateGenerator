@@ -22,7 +22,9 @@ namespace UnitTestBoilerplate.Services.ProjectSelection
 		{
 			var format = this.settings.TestProjectNameFormat;
 			if (string.IsNullOrWhiteSpace(format))
+			{
 				return null;
+			}
 
 			IList<string> selectedProjectNames = SolutionUtilities
 				.GetSelectedFiles(this.dte)
@@ -30,7 +32,9 @@ namespace UnitTestBoilerplate.Services.ProjectSelection
 				.ToList();
 
 			if (selectedProjectNames.Count != 1)
+			{
 				return null; // we cannot reliably predict, which test project is correct, when multiple source projects are selected
+			}
 
 			var expectedTestProject = format.Replace("$ProjectName$", selectedProjectNames.First());
 			return testProjects

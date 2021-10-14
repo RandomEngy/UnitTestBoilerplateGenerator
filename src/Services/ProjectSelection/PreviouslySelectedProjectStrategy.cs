@@ -22,11 +22,15 @@ namespace UnitTestBoilerplate.Services.ProjectSelection
 		public TestProject Apply(IEnumerable<TestProject> testProjects)
 		{
 			if (this.previouslySelectedProject != null)
+			{
 				return this.previouslySelectedProject;
+			}
 
 			string lastSelectedProject = this.cache.GetLastSelectedProject(this.dte.Solution.FileName);
 			if (lastSelectedProject == null)
+			{
 				return null;
+			}
 
 			return testProjects
 				?.FirstOrDefault(project => 
