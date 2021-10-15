@@ -99,8 +99,8 @@ namespace UnitTestBoilerplate.Utilities
 				case "SingleLine":
 					tokenValue = RunSingleLineReplacement(tokenValue);
 					break;
-				case "ReplaceOneFullMatch":
-					tokenValue = RunReplaceOneFullMatchReplacement(tokenValue, args);
+				case "Map":
+					tokenValue = RunMapReplacement(tokenValue, args);
 					break;
 				default:
 					// Ignore the modifier
@@ -208,7 +208,7 @@ namespace UnitTestBoilerplate.Utilities
 
 		private static string RunLowerCaseReplacement(string tokenValue)
 		{
-			tokenValue = tokenValue.ToLower();
+			tokenValue = tokenValue.ToLowerInvariant();
 			return tokenValue;
 		}
 
@@ -228,25 +228,24 @@ namespace UnitTestBoilerplate.Utilities
 		}
 
 		/// <summary>
-		/// Implements ReplaceOneFullMatch.  Takes an even numbered set of comma separated arguments.  Each pair
-		/// denotes a key/value pair.  If the token matches the key, it is replaced with the corresponding value.
-		/// This function is not recursive.  Only the first match is processed.  Subsequent pairs will be left
-		/// unevaluated.
+		/// Implements Map. If the token matches the key, it is replaced with the corresponding value.
+		/// This will short-circuit after the first match.
 		/// </summary>
 		/// <param name="tokenValue">Value from the token to be possibly replaced.</param>
-		/// <param name="args">Comma separated list of key/value pairs</param>
+		/// <param name="args">Comma separated list of key/value pairs, e.g. key1=val1,key2=val2</param>
 		/// <returns>The value corresponding to the key that is the case insensitive equivalent of the tokenValue. Otherwise, the original tokenValue.</returns>
-		private static string RunReplaceOneFullMatchReplacement(string tokenValue, string args)
+		private static string RunMapReplacement(string tokenValue, string args)
 		{
-			string[] argParts = args.Split(',');
-			for (int replacementIndex = 1; replacementIndex < argParts.Length; replacementIndex = replacementIndex + 2)
+			string[] argParts = args.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+			foreach (string argPart in argParts)
 			{
-				int httpTypeIndex = replacementIndex - 1;
-				if (string.Equals(argParts[httpTypeIndex], tokenValue, StringComparison.CurrentCultureIgnoreCase))
+				string[] keyValue = argPart.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+				if (keyValue.Length == 2 && string.Equals(keyValue[0], tokenValue, StringComparison.OrdinalIgnoreCase))
 				{
-					return argParts[replacementIndex];
+					return keyValue[1];
 				}
 			}
+
 			return tokenValue;
 		}
 
