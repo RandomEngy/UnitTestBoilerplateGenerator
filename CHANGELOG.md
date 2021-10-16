@@ -4,6 +4,14 @@
 
 # Changelog
 
+## 2.7.0
+**2021-10-14**
+- Added a bunch of new tokens and modifiers, thanks to __jchesshir__:
+  - New tokens TestedMethodReturnType, MethodParameters
+  - New tokens for ASP.NET MVC: HttpType, HttpMethodParameters and UriParameters
+  - New token modifiers: Remove, RemoveGeneric, LowerCase, Prefix, SingleLine, Map
+- Added a new option for the test project name format, thanks to __Gleb Osokin__. A project matching that will be automatically selected, meaning you no longer need to manually switch target projects.
+
 ## 2.6.1
 **2021-10-07**
 - Fixed issue with file-scoped namespaces (C# 10 feature). It's also possible to update the template to produce tests with file-scoped namespaces, as long as the test project supports C# 10.

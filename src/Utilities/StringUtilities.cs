@@ -93,8 +93,8 @@ namespace UnitTestBoilerplate.Utilities
 				case "LowerCase":
 					tokenValue = RunLowerCaseReplacement(tokenValue);
 					break;
-				case "AddOnParams":
-					tokenValue = RunAddOnParamsReplacement(tokenValue);
+				case "Prefix":
+					tokenValue = RunPrefixReplacement(tokenValue, args);
 					break;
 				case "SingleLine":
 					tokenValue = RunSingleLineReplacement(tokenValue);
@@ -212,11 +212,17 @@ namespace UnitTestBoilerplate.Utilities
 			return tokenValue;
 		}
 
-		private static string RunAddOnParamsReplacement(string tokenValue)
+		/// <summary>
+		/// Prefixes a given token with the text, provided the token is not empty.
+		/// </summary>
+		/// <param name="tokenValue">The token value to add the prefix to.</param>
+		/// <param name="text">The text to add as a prefix.</param>
+		/// <returns>The replaced token value.</returns>
+		private static string RunPrefixReplacement(string tokenValue, string text)
 		{
 			if (!string.IsNullOrEmpty(tokenValue))
 			{
-				return $",{tokenValue}";
+				return text + tokenValue;
 			}
 
 			return tokenValue;
