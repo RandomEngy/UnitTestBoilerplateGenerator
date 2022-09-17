@@ -11,6 +11,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Formatting;
 using UnitTestBoilerplate.Model;
 using UnitTestBoilerplate.Utilities;
+using UnitTestBoilerplate.View;
 
 namespace UnitTestBoilerplate.Services
 {
@@ -83,7 +84,40 @@ namespace UnitTestBoilerplate.Services
 
 			if (File.Exists(testPath))
 			{
-				throw new InvalidOperationException("Test file already exists.");
+				var dialog = new TestFileConflict(testPath);
+				dialog.ShowModal();
+
+				switch (dialog.Result)
+				{
+					case TestFileConflictResult.Cancel:
+						return null;
+					case TestFileConflictResult.Overwrite:
+						File.Delete(testPath);
+						break;
+					case TestFileConflictResult.UseNewName:
+						bool foundNewName = false;
+						for (int i = 2; i < 100; i++)
+						{
+							string testPathCandidate = Path.Combine(testFolder, testFileNameBase + i + ".cs");
+							if (!File.Exists(testPathCandidate))
+							{
+								testPath = testPathCandidate;
+								foundNewName = true;
+								break;
+							}
+						}
+
+						if (!foundNewName)
+						{
+							throw new InvalidOperationException("Could not find new name for test file.");
+						}
+
+						break;
+				}
+
+				//System.Diagnostics.Debug.WriteLine(dialog.Result);
+
+				//throw new InvalidOperationException("Test file already exists.");
 			}
 
 			if (!Directory.Exists(testFolder))

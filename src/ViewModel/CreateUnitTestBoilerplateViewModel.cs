@@ -165,7 +165,10 @@ namespace UnitTestBoilerplate.ViewModel
 					this.SelectedTestFramework,
 					this.SelectedMockFramework);
 
-				createdTestPaths.Add(generatedTestPath);
+				if (generatedTestPath != null)
+				{
+					createdTestPaths.Add(generatedTestPath);
+				}
 			}
 
 			if (addToProject)
