@@ -4,6 +4,14 @@
 
 # Changelog
 
+## 2.7.3
+**2023-02-25**
+- Added support for ARM64.
+
+## 2.7.2
+**2022-09-16**
+- Added dialog to handle conflict if a test file already exists. Allows you to overwrite the old test file or use a new name for the file.
+
 ## 2.7.0
 **2021-10-14**
 - Added a bunch of new tokens and modifiers, thanks to __jchesshir__:
