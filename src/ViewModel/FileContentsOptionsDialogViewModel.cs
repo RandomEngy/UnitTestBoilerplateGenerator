@@ -260,7 +260,7 @@ namespace UnitTestBoilerplate.ViewModel
 				return this.openTokenListCommand ?? (this.openTokenListCommand = new RelayCommand(
 					() =>
 					{
-						System.Diagnostics.Process.Start("https://github.com/Microsoft/UnitTestBoilerplateGenerator/wiki/Custom-Format-Tokens");
+						System.Diagnostics.Process.Start("https://github.com/RandomEngy/UnitTestBoilerplateGenerator/wiki/Custom-Format-Tokens");
 					}));
 			}
 		}
