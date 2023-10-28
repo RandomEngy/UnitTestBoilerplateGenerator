@@ -4,6 +4,10 @@
 
 # Changelog
 
+## 2.7.4
+**2023-10-28**
+- Fixed link to token reference from template options page.
+
 ## 2.7.3
 **2023-02-25**
 - Added support for ARM64.
