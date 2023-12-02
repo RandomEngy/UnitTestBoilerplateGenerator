@@ -217,12 +217,12 @@ namespace UnitTestBoilerplate.Services
 				throw new InvalidOperationException("Could not find class, struct or record declaration.");
 			}
 
-			if (firstClassLikeDeclaration.ChildTokens().Any(node => node.Kind() == SyntaxKind.AbstractKeyword))
+			if (firstClassLikeDeclaration.ChildTokens().Any(node => node.IsKind(SyntaxKind.AbstractKeyword)))
 			{
 				throw new InvalidOperationException("Cannot unit test an abstract class.");
 			}
 
-			SyntaxToken classIdentifierToken = firstClassLikeDeclaration.ChildTokens().FirstOrDefault(n => n.Kind() == SyntaxKind.IdentifierToken);
+			SyntaxToken classIdentifierToken = firstClassLikeDeclaration.ChildTokens().FirstOrDefault(n => n.IsKind(SyntaxKind.IdentifierToken));
 			if (classIdentifierToken == default(SyntaxToken))
 			{
 				throw new InvalidOperationException("Could not find class identifier.");
