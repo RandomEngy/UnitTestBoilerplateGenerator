@@ -272,7 +272,7 @@ namespace UnitTestBoilerplate.Services
 			// Find constructor injection types
 			List<InjectableType> constructorInjectionTypes = new List<InjectableType>();
 
-			SyntaxNode constructorDeclaration = firstClassLikeDeclaration.ChildNodes().FirstOrDefault(n => n.Kind() == SyntaxKind.ConstructorDeclaration);
+			SyntaxNode constructorDeclaration = firstClassLikeDeclaration.ChildNodes().FirstOrDefault(n => n.Kind() == SyntaxKind.ConstructorDeclaration || n.Kind() == SyntaxKind.ParameterList);
 
 			if (constructorDeclaration != null)
 			{
@@ -409,7 +409,7 @@ namespace UnitTestBoilerplate.Services
 
 		private static IEnumerable<ParameterSyntax> GetParameterListNodes(SyntaxNode memberNode)
 		{
-			SyntaxNode parameterListNode = memberNode.ChildNodes().First(n => n.Kind() == SyntaxKind.ParameterList);
+			SyntaxNode parameterListNode = memberNode.Kind() != SyntaxKind.ParameterList ? memberNode.ChildNodes().First(n => n.Kind() == SyntaxKind.ParameterList) : memberNode;
 
 			return parameterListNode.ChildNodes().Where(n => n.Kind() == SyntaxKind.Parameter).Cast<ParameterSyntax>();
 		}
