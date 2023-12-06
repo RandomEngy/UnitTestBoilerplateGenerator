@@ -4,6 +4,10 @@
 
 # Changelog
 
+## 2.7.5
+**2023-12-06**
+- Added support for C# 12 Primary Constructors, thanks to tomasKosar.
+
 ## 2.7.4
 **2023-10-28**
 - Fixed link to token reference from template options page.
